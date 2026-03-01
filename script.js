@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-
+    //test
     // Smooth scroll for anchor links mostly handled by CSS scroll-behavior
     // but we can add active state highlighting if needed
 });
