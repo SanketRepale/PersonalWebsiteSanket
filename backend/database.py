@@ -6,7 +6,14 @@ import datetime
 
 # Vercel / Production deployment requires a permanent database (like PostgreSQL/Vercel Postgres)
 # SQLite is used locally for development
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./portfolio.db")
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if not DATABASE_URL:
+    # Vercel's serverless functions are read-only except for the /tmp directory
+    if os.getenv("VERCEL") == "1":
+        DATABASE_URL = "sqlite:////tmp/portfolio.db"
+    else:
+        DATABASE_URL = "sqlite:///./portfolio.db"
 
 # Fix for older SQLAlchemy vs newer Postgres connection string schemes
 if DATABASE_URL.startswith("postgres://"):

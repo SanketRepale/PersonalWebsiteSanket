@@ -82,8 +82,18 @@ def get_db():
 def get_current_admin(credentials: HTTPBasicCredentials = Depends(security), db: Session = Depends(get_db)):
     admin = db.query(AdminUser).first()
     if not admin:
-        raise HTTPException(status_code=500, detail="Admin user missing from database.")
+        # Vercel Serverless environment fallback. If lifespan failed to seed, seed it during first request.
+        default_user = os.getenv("ADMIN_USERNAME", "admin@example.com")
+        default_pass = os.getenv("ADMIN_PASSWORD", "admin123")
+        default_pin = os.getenv("ADMIN_RECOVERY_PIN", "12345")
         
+        admin = AdminUser(
+            username=default_user, 
+            password_hash=get_password_hash(default_pass),
+            recovery_pin_hash=get_password_hash(default_pin)
+        )
+        db.add(admin)
+        db.commit()
     correct_username = secrets.compare_digest(credentials.username, admin.username)
     correct_password = secrets.compare_digest(get_password_hash(credentials.password), admin.password_hash)
     if not (correct_username and correct_password):

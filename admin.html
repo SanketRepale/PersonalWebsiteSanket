@@ -175,12 +175,11 @@
         <h2><i class="fas fa-lock"></i> Admin Login</h2>
         <p style="margin-bottom: 20px; font-size: 0.9em; color: #94a3b8;">Restricted access</p>
         <form id="login-form">
-            <input type="text" id="username" placeholder="Username" required>
+            <input type="email" id="username" placeholder="Username (Email)" required>
             <input type="password" id="password" placeholder="Password" required>
             <button type="submit" class="btn btn-primary w-100" id="login-btn">Login to Dashboard</button>
         </form>
-        <div id="login-error" class="error-msg" style="display:none; font-size:0.9em; margin-top:15px;">Invalid
-            Credentials.</div>
+        <div id="login-error" class="error-msg" style="display:none; font-size:0.9em; margin-top:15px;"></div>
         <a href="javascript:void(0)" onclick="document.getElementById('reset-modal').style.display='flex'"
             style="display:block; margin-top:15px; color:var(--primary); font-size:0.85em; text-decoration:none;">Forgot
             Password?</a>
@@ -341,9 +340,12 @@
                 });
 
                 if (response.status === 401) {
-                    throw new Error('Unauthorized');
+                    throw new Error('Invalid Credentials');
                 }
-                if (!response.ok) throw new Error('Network error');
+
+                if (!response.ok) {
+                    throw new Error('Server connection failed (' + response.status + ')');
+                }
 
                 // If we get here, login was successful! Switch UI
                 if (isLoginAttempt) {
@@ -381,13 +383,14 @@
                 });
             } catch (err) {
                 if (isLoginAttempt) {
+                    loginError.innerHTML = '<i class="fas fa-exclamation-circle"></i> ' + err.message;
                     loginError.style.display = 'block';
                     btn.innerHTML = 'Login to Dashboard';
                     btn.disabled = false;
                 } else {
-                    console.error('Error fetching messages:', err);
-                    tbody.innerHTML = '';
-                    errorDiv.style.display = 'block';
+                    tbody.innerHTML =
+                        `<tr><td colspan="5" style="color:#ef4444;text-align:center;">Failed to load messages: ${err.message}</td></tr>`;
+                    logout();
                 }
             }
         }
