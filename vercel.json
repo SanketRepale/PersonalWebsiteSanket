@@ -1,20 +1,6 @@
 {
     "name": "personal-website",
     "version": 2,
-    "builds": [
-        {
-            "src": "backend/main.py",
-            "use": "@vercel/python"
-        },
-        {
-            "src": "assets/(.*)",
-            "use": "@vercel/static"
-        },
-        {
-            "src": "pages/(.*)",
-            "use": "@vercel/static"
-        }
-    ],
     "cleanUrls": true,
     "redirects": [
         {
@@ -34,7 +20,7 @@
         },
         {
             "source": "/api/(.*)",
-            "destination": "/backend/main.py"
+            "destination": "/api/index.py"
         }
     ]
 }
