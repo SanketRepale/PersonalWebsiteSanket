@@ -27,30 +27,26 @@
             "use": "@vercel/static"
         }
     ],
-    "routes": [
+    "cleanUrls": true,
+    "redirects": [
         {
-            "src": "/index.html",
-            "headers": {
-                "Location": "/"
-            },
-            "status": 308
-        },
-        {
-            "src": "/",
-            "dest": "/pages/home.html"
-        },
-        {
-            "src": "/admin",
-            "dest": "/pages/admin.html"
-        },
-        {
-            "src": "/api/(.*)",
-            "dest": "backend/main.py"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "/$1"
+            "source": "/index.html",
+            "destination": "/",
+            "permanent": true
         }
     ],
-    "cleanUrls": true
+    "rewrites": [
+        {
+            "source": "/",
+            "destination": "/pages/home.html"
+        },
+        {
+            "source": "/admin",
+            "destination": "/pages/admin.html"
+        },
+        {
+            "source": "/api/(.*)",
+            "destination": "/backend/main.py"
+        }
+    ]
 }
