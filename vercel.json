@@ -12,11 +12,11 @@
     "rewrites": [
         {
             "source": "/",
-            "destination": "/pages/home.html"
+            "destination": "/pages/home"
         },
         {
             "source": "/admin",
-            "destination": "/pages/admin.html"
+            "destination": "/pages/admin"
         },
         {
             "source": "/api/(.*)",
