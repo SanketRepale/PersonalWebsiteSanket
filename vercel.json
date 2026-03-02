@@ -2,6 +2,20 @@
     "name": "personal-website",
     "version": 2,
     "cleanUrls": true,
+    "builds": [
+        {
+            "src": "api/index.py",
+            "use": "@vercel/python"
+        },
+        {
+            "src": "pages/**/*.html",
+            "use": "@vercel/static"
+        },
+        {
+            "src": "assets/**/*",
+            "use": "@vercel/static"
+        }
+    ],
     "redirects": [
         {
             "source": "/index.html",
