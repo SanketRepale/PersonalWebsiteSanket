@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const isLight = document.body.classList.contains('light-mode');
             // Fetch colors according to the current theme
-            const nodeColor = isLight ? 'rgba(79, 70, 229, 0.18)' : 'rgba(0, 242, 254, 0.2)';
+            const nodeColor = isLight ? 'rgba(79, 70, 229, 0.28)' : 'rgba(0, 242, 254, 0.2)';
             const lineColorRaw = isLight ? { r: 79, g: 70, b: 229 } : { r: 0, g: 242, b: 254 };
             const mouseLineColorRaw = isLight ? { r: 236, g: 72, b: 153 } : { r: 240, g: 147, b: 251 };
             const maxDistance = 140;
@@ -270,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const dist = Math.sqrt(dx * dx + dy * dy);
 
                     if (dist < maxDistance) {
-                        const alpha = (1 - dist / maxDistance) * 0.12;
+                        const alpha = (1 - dist / maxDistance) * (isLight ? 0.22 : 0.12);
                         ctx.beginPath();
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const dist = Math.sqrt(dx * dx + dy * dy);
 
                     if (dist < mouse.radius) {
-                        const alpha = (1 - dist / mouse.radius) * 0.16;
+                        const alpha = (1 - dist / mouse.radius) * (isLight ? 0.26 : 0.16);
                         ctx.beginPath();
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(mouse.x, mouse.y);
