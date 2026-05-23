@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Theme Toggle
+
+    // ═══════════════════════════════════════════
+    // THEME TOGGLE
+    // ═══════════════════════════════════════════
     const themeToggleBtn = document.getElementById('theme-toggle');
     const body = document.body;
     
@@ -9,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
             body.classList.add('light-mode');
             themeIcon.classList.replace('fa-sun', 'fa-moon');
         }
-        
         themeToggleBtn.addEventListener('click', () => {
             body.classList.toggle('light-mode');
             const isLight = body.classList.contains('light-mode');
@@ -18,37 +20,120 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Navbar Scroll Effect
+    // ═══════════════════════════════════════════
+    // MOBILE NAV TOGGLE
+    // ═══════════════════════════════════════════
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const navLinks = document.getElementById('nav-links');
+    if (mobileToggle && navLinks) {
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = mobileToggle.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-xmark');
+        });
+        // Close menu on link click
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const icon = mobileToggle.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-xmark');
+            });
+        });
+    }
+
+    // ═══════════════════════════════════════════
+    // NAVBAR SCROLL EFFECT
+    // ═══════════════════════════════════════════
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
         navbar.classList.toggle('scrolled', window.scrollY > 50);
     });
 
-    // Reveal Animations using Intersection Observer
-    const revealElements = document.querySelectorAll('.reveal');
+    // ═══════════════════════════════════════════
+    // SCROLL REVEAL ANIMATIONS
+    // ═══════════════════════════════════════════
+    const revealClasses = ['.reveal', '.reveal-left', '.reveal-right', '.reveal-scale'];
+    const allReveals = document.querySelectorAll(revealClasses.join(','));
+    
     const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
-                observer.unobserve(entry.target); // Reveal only once
+                observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+    }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
 
-    revealElements.forEach(el => revealObserver.observe(el));
+    allReveals.forEach(el => revealObserver.observe(el));
 
-    // Magnetic / Radial Glow effect for Bento Cards
+    // ═══════════════════════════════════════════
+    // ANIMATED STAT COUNTERS
+    // ═══════════════════════════════════════════
+    const counters = document.querySelectorAll('[data-count]');
+    const counterObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = parseInt(entry.target.dataset.count);
+                let current = 0;
+                const duration = 1500;
+                const step = target / (duration / 16);
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    entry.target.textContent = Math.floor(current);
+                }, 16);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => counterObserver.observe(counter));
+
+    // ═══════════════════════════════════════════
+    // BENTO CARD - MOUSE GLOW + GRADIENT BORDER ROTATION
+    // ═══════════════════════════════════════════
     document.querySelectorAll('.bento-card').forEach(card => {
         card.addEventListener('mousemove', e => {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            card.style.setProperty('--mouse-x', `${x}px`);
-            card.style.setProperty('--mouse-y', `${y}px`);
+            
+            // Update mouse position for radial glow
+            const glow = card.querySelector('.card-glow');
+            if (glow) {
+                glow.style.setProperty('--mouse-x', `${x}px`);
+                glow.style.setProperty('--mouse-y', `${y}px`);
+            }
+            
+            // Calculate angle for rotating gradient border
+            const cx = rect.width / 2;
+            const cy = rect.height / 2;
+            const angle = Math.atan2(y - cy, x - cx) * (180 / Math.PI);
+            card.style.setProperty('--card-angle', `${angle + 180}deg`);
         });
     });
 
-    // Form Submission
+    // ═══════════════════════════════════════════
+    // SMOOTH SCROLL for nav links
+    // ═══════════════════════════════════════════
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // ═══════════════════════════════════════════
+    // CONTACT FORM SUBMISSION
+    // ═══════════════════════════════════════════
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', async (e) => {
@@ -74,18 +159,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (response.ok) {
-                    btn.innerHTML = '<i class="fas fa-check"></i> Sent successfully';
-                    btn.style.background = '#10b981';
+                    btn.innerHTML = '<i class="fas fa-check"></i> Sent successfully!';
+                    btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
                     contactForm.reset();
                 } else {
                     const data = await response.json();
                     const errMsg = data.detail ? (Array.isArray(data.detail) ? data.detail[0].msg : data.detail) : 'Error';
                     btn.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${errMsg}`;
-                    btn.style.background = '#ef4444';
+                    btn.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
                 }
             } catch (error) {
                 btn.innerHTML = '<i class="fas fa-wifi"></i> Network Error';
-                btn.style.background = '#ef4444';
+                btn.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
             } finally {
                 setTimeout(() => {
                     btn.innerHTML = originalText;

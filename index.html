@@ -3,34 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Personal portfolio of Sanket Prakash Repale, SDET.">
-    <title>Sanket Prakash Repale | SDET</title>
+    <meta name="description" content="Sanket Prakash Repale — SDET specializing in Agentic AI automation, Selenium, Playwright, and enterprise-grade testing frameworks.">
+    <title>Sanket Prakash Repale | SDET & Automation Architect</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
     
-    <!-- Google Fonts: Premium selection -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="assets/css/styles.css?v=3">
+    <link rel="stylesheet" href="assets/css/styles.css?v=4">
 </head>
 <body>
-    <!-- Ambient glowing backgrounds -->
+    <!-- Ambient Background Orbs -->
     <div class="ambient-glow glow-1"></div>
     <div class="ambient-glow glow-2"></div>
+    <div class="ambient-glow glow-3"></div>
 
+    <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <div class="container nav-content">
             <a href="#" class="logo">Sanket<span class="dot">.</span></a>
-            <ul class="nav-links">
+            <button class="mobile-toggle" id="mobile-toggle"><i class="fas fa-bars"></i></button>
+            <ul class="nav-links" id="nav-links">
                 <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#expertise" class="nav-link">Expertise</a></li>
                 <li><a href="#experience" class="nav-link">Experience</a></li>
-                <li><a href="#contact" class="btn btn-outline" style="padding: 0.5rem 1.2rem; font-size: 0.9rem;">Contact</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
                 <li><a href="pages/admin.html" class="nav-link"><i class="fas fa-lock"></i></a></li>
                 <li><button id="theme-toggle" class="theme-toggle-btn"><i class="fas fa-sun"></i></button></li>
             </ul>
@@ -38,39 +36,83 @@
     </nav>
 
     <main>
-        <!-- Hero Section -->
+        <!-- ══════════ HERO ══════════ -->
         <section id="about" class="hero">
             <div class="container hero-content">
                 <div class="reveal">
-                    <span class="hero-badge">Software Development Engineer in Test</span>
-                    <h1 class="titanium-text">Sanket Repale<br><span class="gradient-text">Automation Architect.</span></h1>
-                    <p class="bio">I engineer bulletproof automated testing frameworks that accelerate delivery and guarantee software quality at scale.</p>
+                    <span class="hero-badge"><i class="fas fa-bolt"></i> Software Development Engineer in Test</span>
+                    <h1 class="titanium-text">Sanket Repale<br><span class="gradient-text">Automation Architect.<span class="typing-cursor"></span></span></h1>
+                    <p class="bio">I engineer bulletproof, AI-powered automated testing frameworks that accelerate delivery pipelines and guarantee software quality at enterprise scale.</p>
                     <div class="hero-cta">
                         <a href="#experience" class="btn btn-primary">View My Work <i class="fas fa-arrow-right"></i></a>
                         <a href="https://www.linkedin.com/in/sanket-repale-521157287" target="_blank" class="btn btn-outline"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
                         <a href="assets/Sanket_Repale_Resume.docx" download class="btn btn-outline"><i class="fas fa-download"></i> Resume</a>
                     </div>
                 </div>
-                <div class="hero-image-wrap reveal delay-200 bento-card" style="padding: 0; border-radius: var(--bento-radius);">
+                <div class="hero-image-wrap reveal bento-card stagger-3" style="padding: 0;">
+                    <div class="card-glow"></div>
                     <img src="assets/images/profile.png" alt="Sanket Prakash Repale">
+                    <div class="hero-status">
+                        <span class="status-dot"></span> Available for opportunities
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="container">
+                <div class="stats-row">
+                    <div class="stat-card reveal stagger-1">
+                        <div class="stat-number"><span class="gradient-text" data-count="3">0</span>+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-card reveal stagger-2">
+                        <div class="stat-number"><span class="gradient-text" data-count="75">0</span>%</div>
+                        <div class="stat-label">Regression Time Reduced</div>
+                    </div>
+                    <div class="stat-card reveal stagger-3">
+                        <div class="stat-number"><span class="gradient-text" data-count="5">0</span>+</div>
+                        <div class="stat-label">Certifications</div>
+                    </div>
+                    <div class="stat-card reveal stagger-4">
+                        <div class="stat-number"><span class="gradient-text" data-count="3">0</span></div>
+                        <div class="stat-label">Industry Awards</div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Expertise (Bento Grid) -->
+        <!-- ══════════ EXPERTISE ══════════ -->
         <section id="expertise">
             <div class="container">
                 <div class="section-header reveal">
                     <h2 class="titanium-text">Core Expertise</h2>
-                    <p>Modern testing ecosystems built for high-performance engineering teams.</p>
+                    <p>Modern testing ecosystems engineered for high-performance engineering teams and rapid delivery cycles.</p>
                 </div>
 
                 <div class="bento-grid">
-                    <div class="bento-card bento-item-small reveal">
+                    <!-- Agentic AI - Featured Card -->
+                    <div class="bento-card bento-item-large reveal stagger-1">
+                        <div class="card-glow"></div>
+                        <div class="bento-content">
+                            <div class="skill-icon-wrap"><i class="fas fa-robot"></i></div>
+                            <h3>Agentic AI Testing</h3>
+                            <p>Pioneering next-generation autonomous testing frameworks powered by Agentic AI. Building self-healing test suites that intelligently generate, execute, and adapt tests across UI, API, ETL, and Performance layers — reducing manual effort by 60%.</p>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Agentic AI</span>
+                                <span class="skill-tag">Self-Healing Tests</span>
+                                <span class="skill-tag">Autonomous Execution</span>
+                                <span class="skill-tag">ETL Validation</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- UI Automation -->
+                    <div class="bento-card bento-item-small reveal stagger-2">
+                        <div class="card-glow"></div>
                         <div class="bento-content">
                             <div class="skill-icon-wrap"><i class="fas fa-vial"></i></div>
                             <h3>UI Automation</h3>
-                            <p>Designing scalable Page Object Model (POM) frameworks that reduce testing time by 75%.</p>
+                            <p>Designing scalable Page Object Model (POM) frameworks that drove a 75% reduction in regression testing time across enterprise applications.</p>
                             <div class="skill-tags">
                                 <span class="skill-tag">Selenium</span>
                                 <span class="skill-tag">Playwright</span>
@@ -79,11 +121,13 @@
                         </div>
                     </div>
 
-                    <div class="bento-card bento-item-large reveal delay-100">
+                    <!-- API Testing -->
+                    <div class="bento-card bento-item-small reveal stagger-1">
+                        <div class="card-glow"></div>
                         <div class="bento-content">
                             <div class="skill-icon-wrap"><i class="fas fa-network-wired"></i></div>
-                            <h3>API & Backend Testing</h3>
-                            <p>Rigorous validation of RESTful and SOAP services ensuring data integrity and robust security at the API layer.</p>
+                            <h3>API & Service Testing</h3>
+                            <p>Rigorous validation of RESTful and SOAP services ensuring data integrity, security compliance, and microservice reliability at the API layer.</p>
                             <div class="skill-tags">
                                 <span class="skill-tag">Ready API</span>
                                 <span class="skill-tag">Postman</span>
@@ -92,28 +136,50 @@
                         </div>
                     </div>
 
-                    <div class="bento-card bento-item-large reveal">
+                    <!-- CI/CD -->
+                    <div class="bento-card bento-item-large reveal stagger-2">
+                        <div class="card-glow"></div>
                         <div class="bento-content">
                             <div class="skill-icon-wrap"><i class="fas fa-server"></i></div>
-                            <h3>CI/CD Integration</h3>
-                            <p>Seamlessly blending automated suites into deployment pipelines to catch bugs before they reach production.</p>
+                            <h3>CI/CD & DevOps Integration</h3>
+                            <p>Seamlessly embedding automated test suites into Azure DevOps CI/CD pipelines to enable continuous validation on every commit, guaranteeing zero-defect production deployments.</p>
                             <div class="skill-tags">
                                 <span class="skill-tag">Azure DevOps</span>
                                 <span class="skill-tag">Git</span>
+                                <span class="skill-tag">Jenkins</span>
                                 <span class="skill-tag">Agile Scrum</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="bento-card bento-item-small reveal delay-100">
+                    <!-- Languages -->
+                    <div class="bento-card bento-item-medium reveal stagger-1">
+                        <div class="card-glow"></div>
                         <div class="bento-content">
                             <div class="skill-icon-wrap"><i class="fas fa-code"></i></div>
-                            <h3>Languages</h3>
-                            <p>Strong programming fundamentals.</p>
+                            <h3>Programming Languages</h3>
+                            <p>Strong programming fundamentals across multiple paradigms, enabling versatile automation solutions tailored to any technology stack.</p>
                             <div class="skill-tags">
                                 <span class="skill-tag">C# / .NET</span>
                                 <span class="skill-tag">Java</span>
                                 <span class="skill-tag">Python</span>
+                                <span class="skill-tag">SQL</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tools -->
+                    <div class="bento-card bento-item-medium reveal stagger-2">
+                        <div class="card-glow"></div>
+                        <div class="bento-content">
+                            <div class="skill-icon-wrap"><i class="fas fa-toolbox"></i></div>
+                            <h3>Tools & Platforms</h3>
+                            <p>Proficient across the full modern SDET toolkit, from IDEs and cloud platforms to project management and collaboration tools.</p>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Visual Studio</span>
+                                <span class="skill-tag">VS Code</span>
+                                <span class="skill-tag">JIRA</span>
+                                <span class="skill-tag">Azure Cloud</span>
                             </div>
                         </div>
                     </div>
@@ -121,36 +187,38 @@
             </div>
         </section>
 
-        <!-- Experience -->
+        <!-- ══════════ EXPERIENCE ══════════ -->
         <section id="experience">
             <div class="container">
                 <div class="section-header reveal">
-                    <h2 class="titanium-text">Experience & Awards</h2>
-                    <p>A track record of excellence and continuous learning.</p>
+                    <h2 class="titanium-text">Experience & Achievements</h2>
+                    <p>A proven track record of driving quality excellence and continuous innovation across enterprise projects.</p>
                 </div>
 
                 <div class="bento-grid">
+                    <!-- Main Experience Card -->
                     <div class="bento-card bento-item-full reveal">
                         <div>
-                            <img src="assets/images/sdet_exp.png" alt="SDET Role" class="exp-image" style="height: 100%;">
+                            <img src="assets/images/sdet_exp.png" alt="SDET Role" class="exp-image">
                         </div>
                         <div class="bento-content">
+                            <div class="card-glow"></div>
                             <!-- ZS Associates -->
                             <span class="exp-date">MAY 2025 - PRESENT</span>
                             <h3>SDET at ZS Associates</h3>
-                            <ul style="list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem; color: var(--text-secondary);">
+                            <ul class="exp-list" style="list-style-type: disc;">
                                 <li>Architecting next-generation <strong>Agentic AI-based automation testing frameworks</strong> spanning UI, API, ETL, and Performance layers for enterprise-scale product development.</li>
                                 <li>Orchestrating autonomous test generation and intelligent execution via AI backend systems, reducing manual scripting effort by an estimated <strong>60%</strong>.</li>
                                 <li>Implementing <strong>self-healing test capabilities</strong> powered by AI agents that autonomously detect and adapt to UI/API changes, minimizing maintenance overhead.</li>
                                 <li>Leading cross-team integration to bridge AI-driven testing with legacy enterprise environments.</li>
                             </ul>
                             
-                            <hr style="border: none; border-top: 1px solid var(--glass-border); margin: 2rem 0;">
+                            <hr style="border: none; border-top: 1px solid var(--glass-border); margin: 1.5rem 0;">
 
                             <!-- LTIMindtree -->
                             <span class="exp-date">MAY 2022 - MAY 2025</span>
                             <h3>SDET at LTIMindtree</h3>
-                            <ul style="list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem; color: var(--text-secondary);">
+                            <ul class="exp-list" style="list-style-type: disc;">
                                 <li>Engineered scalable automated test scripts using C# and Selenium WebDriver based on the <strong>Page Object Model (POM)</strong> design pattern.</li>
                                 <li>Drove a <strong>75% reduction</strong> in regression testing execution times by refactoring legacy manual test cases into optimized automated suites.</li>
                                 <li>Managed end-to-end <strong>STLC</strong> — from requirements analysis and test strategy to execution and defect management across multiple concurrent projects.</li>
@@ -158,7 +226,7 @@
                                 <li>Validated RESTful and SOAP services using Ready API and Postman, ensuring data integrity and security compliance.</li>
                             </ul>
                             
-                            <div class="skill-tags" style="padding-top: 1rem;">
+                            <div class="skill-tags" style="padding-top: 0.5rem;">
                                 <span class="skill-tag">Agentic AI</span>
                                 <span class="skill-tag">Selenium</span>
                                 <span class="skill-tag">Playwright</span>
@@ -170,10 +238,13 @@
                         </div>
                     </div>
 
-                    <div class="bento-card bento-item-medium reveal">
+                    <!-- Certifications -->
+                    <div class="bento-card bento-item-medium reveal stagger-1">
+                        <div class="card-glow"></div>
                         <div class="bento-content">
+                            <div class="skill-icon-wrap"><i class="fas fa-certificate"></i></div>
                             <h3>Certifications</h3>
-                            <ul style="list-style-type: disc; padding-left: 1.5rem; color: var(--text-secondary);">
+                            <ul class="exp-list" style="list-style-type: disc;">
                                 <li>Microsoft Azure Fundamentals (AZ-900)</li>
                                 <li>Playwright Automation — Advanced Framework Design</li>
                                 <li>Selenium WebDriver Masterclass</li>
@@ -183,54 +254,96 @@
                         </div>
                     </div>
 
-                    <div class="bento-card bento-item-medium reveal delay-100">
+                    <!-- Awards -->
+                    <div class="bento-card bento-item-medium reveal stagger-2">
+                        <div class="card-glow"></div>
                         <div class="bento-content">
+                            <div class="skill-icon-wrap"><i class="fas fa-trophy"></i></div>
                             <h3>Awards & Recognition</h3>
-                            <p>Awarded the <strong>Shooting Star</strong>, <strong>Team Player</strong>, and <strong>Super Crew</strong> awards for outstanding deliveries and client appreciation.</p>
+                            <ul class="exp-list" style="list-style-type: disc;">
+                                <li><strong>Shooting Star Award</strong> — Recognized for exceptional individual contributions and rapid skill development.</li>
+                                <li><strong>Team Player Award</strong> — Acknowledged for outstanding cross-functional collaboration and team leadership.</li>
+                                <li><strong>Super Crew Award</strong> — Honored for consistent client appreciation and delivering beyond expectations.</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Contact -->
+        <!-- ══════════ CONTACT ══════════ -->
         <section id="contact">
             <div class="container">
-                <div class="bento-card bento-item-full reveal contact-grid">
-                    <div class="contact-info bento-content">
-                        <h2 class="titanium-text" style="font-size: 3rem; margin-bottom: 1rem;">Let's talk.</h2>
-                        <p style="margin-bottom: 2rem;">I'm currently exploring new opportunities. Reach out if you want to build high-quality software together.</p>
-                        <div style="display: flex; flex-direction: column; gap: 1rem;">
-                            <p><i class="fas fa-envelope" style="color: var(--primary); width: 30px;"></i> sanketrepale123@gmail.com</p>
-                            <p><i class="fas fa-phone" style="color: var(--primary); width: 30px;"></i> (+91) 8452836416</p>
-                            <p><i class="fas fa-map-marker-alt" style="color: var(--primary); width: 30px;"></i> Pune, Maharashtra</p>
+                <div class="section-header reveal">
+                    <h2 class="titanium-text">Let's Connect</h2>
+                    <p>I'm currently exploring new opportunities. Reach out if you want to build high-quality software together.</p>
+                </div>
+
+                <div class="bento-card reveal" style="padding: 3rem;">
+                    <div class="card-glow"></div>
+                    <div class="contact-grid">
+                        <div class="bento-content" style="gap: 1.5rem;">
+                            <div class="contact-item">
+                                <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                                <div>
+                                    <p style="font-weight: 600; color: var(--text-primary); font-size: 0.9rem;">Email</p>
+                                    <p style="font-size: 0.95rem;">sanketrepale123@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                                <div>
+                                    <p style="font-weight: 600; color: var(--text-primary); font-size: 0.9rem;">Phone</p>
+                                    <p style="font-size: 0.95rem;">(+91) 8452836416</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                                <div>
+                                    <p style="font-weight: 600; color: var(--text-primary); font-size: 0.9rem;">Location</p>
+                                    <p style="font-size: 0.95rem;">Pune, Maharashtra</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon"><i class="fab fa-linkedin-in"></i></div>
+                                <div>
+                                    <p style="font-weight: 600; color: var(--text-primary); font-size: 0.9rem;">LinkedIn</p>
+                                    <a href="https://www.linkedin.com/in/sanket-repale-521157287" target="_blank" style="font-size: 0.95rem; color: var(--primary);">View Profile</a>
+                                </div>
+                            </div>
                         </div>
+                        
+                        <form class="contact-form" id="contact-form">
+                            <div class="form-group">
+                                <input type="text" id="name" placeholder="Your Name" required minlength="2">
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="email" placeholder="Email Address" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea id="message" rows="5" placeholder="Tell me about your project or opportunity..." required minlength="10"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Send Message <i class="fas fa-paper-plane"></i></button>
+                        </form>
                     </div>
-                    
-                    <form class="contact-form" id="contact-form">
-                        <div class="form-group">
-                            <input type="text" id="name" placeholder="Name" required minlength="2">
-                        </div>
-                        <div class="form-group">
-                            <input type="email" id="email" placeholder="Email Address" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea id="message" rows="4" placeholder="Your Message" required minlength="10"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Send Message <i class="fas fa-paper-plane"></i></button>
-                    </form>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-logo titanium-text">Sanket.</div>
-            <p>&copy; 2026 Developed by Sanket Prakash Repale. Designed for performance.</p>
+            <p>&copy; 2026 Sanket Prakash Repale. Engineered for performance.</p>
+            <div class="footer-socials">
+                <a href="https://www.linkedin.com/in/sanket-repale-521157287" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://github.com/SanketRepale" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="mailto:sanketrepale123@gmail.com"><i class="fas fa-envelope"></i></a>
+            </div>
         </div>
     </footer>
 
-    <script src="assets/js/script.js?v=3"></script>
+    <script src="assets/js/script.js?v=4"></script>
 </body>
 </html>
