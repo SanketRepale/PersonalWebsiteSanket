@@ -1,5 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // Record page view count
+    const IS_DEV_VIEW = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const VIEW_API_URL = IS_DEV_VIEW ? 'http://localhost:8000/api/view' : '/api/view';
+    fetch(VIEW_API_URL, { method: 'POST' }).catch(() => {});
+
     // ═══════════════════════════════════════════
     // THEME TOGGLE
     // ═══════════════════════════════════════════

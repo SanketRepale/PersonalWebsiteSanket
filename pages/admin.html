@@ -241,6 +241,17 @@
             </div>
         </div>
 
+        <!-- Stats Summary -->
+        <div style="margin-bottom: 25px; display: flex; gap: 20px; flex-wrap: wrap;">
+            <div class="glass-card" style="padding: 20px; display: flex; align-items: center; gap: 15px; border-radius: 16px; flex: 1; min-width: 200px; max-width: 300px;">
+                <div style="font-size: 2.2rem; color: var(--primary);"><i class="fas fa-eye"></i></div>
+                <div>
+                    <div style="font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Total Page Hits</div>
+                    <div style="font-size: 1.8rem; font-weight: 800; color: var(--text-primary);" id="total-hits">-</div>
+                </div>
+            </div>
+        </div>
+
         <div class="glass-card" style="overflow-x: auto;">
             <table>
                 <thead>
@@ -360,6 +371,25 @@
             await fetchMessages(true);
         });
 
+        async function fetchHits() {
+            const hitsEl = document.getElementById('total-hits');
+            if (!hitsEl) return;
+            try {
+                const response = await fetch(`${API_BASE}/admin/hits`, {
+                    headers: { 'Authorization': authToken }
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    hitsEl.textContent = data.total_hits;
+                } else {
+                    hitsEl.textContent = 'Error';
+                }
+            } catch (err) {
+                console.error('Error fetching hits:', err);
+                hitsEl.textContent = 'Error';
+            }
+        }
+
         async function fetchMessages(isLoginAttempt = false) {
             const tbody = document.getElementById('messages-body');
             const errorDiv = document.getElementById('error');
@@ -370,6 +400,8 @@
                 tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Loading messages...</td></tr>';
                 errorDiv.style.display = 'none';
                 loginError.style.display = 'none';
+
+                fetchHits();
 
                 const response = await fetch(API_URL, {
                     headers: { 'Authorization': authToken } // Send the secret token

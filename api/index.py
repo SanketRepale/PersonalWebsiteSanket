@@ -22,7 +22,7 @@ logger.info("Initializing FastAPI Backend...")
 # Explicitly add the backend folder to Vercel's Python Path so it can find database.py
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from database import SessionLocal, ContactMessage, AdminUser, engine
+from database import SessionLocal, ContactMessage, AdminUser, PageView, engine
 
 load_dotenv() # Load variables from .env file locally if present
 
@@ -204,3 +204,16 @@ def reset_password(reset: PasswordReset, db: Session = Depends(get_db)):
     admin.password_hash = get_password_hash(reset.new_password)
     db.commit()
     return {"status": "success", "message": "Password reset successfully"}
+
+@app.post("/api/view")
+def record_view(db: Session = Depends(get_db)):
+    db_view = PageView()
+    db.add(db_view)
+    db.commit()
+    return {"status": "success"}
+
+@app.get("/api/admin/hits")
+def get_hits(db: Session = Depends(get_db), admin: AdminUser = Depends(get_current_admin)):
+    count = db.query(PageView).count()
+    return {"total_hits": count}
+

@@ -44,4 +44,10 @@ class AdminUser(Base):
     password_hash = Column(String)
     recovery_pin_hash = Column(String)
 
+class PageView(Base):
+    __tablename__ = "page_views"
+
+    id = Column(Integer, primary_key=True, index=True)
+    timestamp = Column(DateTime, default=datetime.datetime.utcnow)
+
 Base.metadata.create_all(bind=engine)

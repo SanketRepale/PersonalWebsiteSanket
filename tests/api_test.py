@@ -42,3 +42,22 @@ def test_get_messages_authorized():
         response = client.get("/api/messages", auth=("admin@example.com", "admin123"))
         assert response.status_code == 200
         assert isinstance(response.json(), list)
+
+def test_record_view():
+    with TestClient(app) as client:
+        response = client.post("/api/view")
+        assert response.status_code == 200
+        assert response.json() == {"status": "success"}
+
+def test_get_hits_unauthorized():
+    with TestClient(app) as client:
+        response = client.get("/api/admin/hits")
+        assert response.status_code == 401
+
+def test_get_hits_authorized():
+    with TestClient(app) as client:
+        client.post("/api/view")
+        response = client.get("/api/admin/hits", auth=("admin@example.com", "admin123"))
+        assert response.status_code == 200
+        assert "total_hits" in response.json()
+        assert response.json()["total_hits"] >= 1
