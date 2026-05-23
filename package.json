@@ -1,0 +1,24 @@
+{
+  "name": "personal-website",
+  "version": "1.0.0",
+  "description": "Welcome to my personal portfolio website! I am an experienced Software Development Engineer in Test (SDET) dedicated to improving software quality through automation. This repository contains the source code for my professional portfolio, showcasing my skills, experience, certifications, and awards.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SanketRepale/PersonalWebsiteSanket.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/SanketRepale/PersonalWebsiteSanket/issues"
+  },
+  "homepage": "https://github.com/SanketRepale/PersonalWebsiteSanket#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.60.0"
+  }
+}

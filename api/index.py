@@ -131,10 +131,12 @@ def get_current_admin(credentials: HTTPBasicCredentials = Depends(security), db:
     return admin
 
 # Pydantic models for request validation and response formatting
+from pydantic import BaseModel, EmailStr, Field
+
 class MessageCreate(BaseModel):
-    name: str
-    email: str
-    message: str
+    name: str = Field(..., min_length=2, max_length=100)
+    email: EmailStr
+    message: str = Field(..., min_length=10, max_length=2000)
 
 class MessageResponse(MessageCreate):
     id: int

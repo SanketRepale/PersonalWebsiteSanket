@@ -26,3 +26,9 @@ backend/portfolio.db
 
 # Vercel Config
 .vercel/
+
+# Testing and DBs
+*.db
+.pytest_cache/
+playwright-report/
+test-results/

@@ -12,6 +12,10 @@
             "use": "@vercel/static"
         },
         {
+            "src": "index.html",
+            "use": "@vercel/static"
+        },
+        {
             "src": "assets/**/*",
             "use": "@vercel/static"
         }
@@ -24,10 +28,6 @@
         }
     ],
     "rewrites": [
-        {
-            "source": "/",
-            "destination": "/pages/home"
-        },
         {
             "source": "/admin",
             "destination": "/pages/admin"
