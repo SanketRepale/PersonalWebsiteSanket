@@ -24,20 +24,28 @@
 }
 
 body.light-mode {
-    --primary: #2563eb;
-    --secondary: #3b82f6;
-    --accent-warm: #a855f7;
+    --primary: #4f46e5;
+    --secondary: #06b6d4;
+    --accent-warm: #ec4899;
     
     --bg-color: #f8fafc;
-    --bg-surface: rgba(255, 255, 255, 0.9);
-    --bg-surface-hover: #ffffff;
+    --bg-surface: rgba(255, 255, 255, 0.7);
+    --bg-surface-hover: rgba(255, 255, 255, 0.9);
     
     --text-primary: #0f172a;
-    --text-secondary: #64748b;
+    --text-secondary: #475569;
     
-    --glass-border: rgba(0, 0, 0, 0.08);
-    --glass-border-hover: rgba(0, 0, 0, 0.15);
+    --glass-border: rgba(79, 70, 229, 0.08);
+    --glass-border-hover: rgba(79, 70, 229, 0.18);
+
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.06) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.06) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(236, 72, 153, 0.04) 0px, transparent 50%),
+        linear-gradient(rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.45));
+    background-attachment: fixed;
 }
+
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; font-size: 16px; }
@@ -59,7 +67,7 @@ body {
     position: fixed;
     border-radius: 50%;
     filter: blur(160px);
-    z-index: -1;
+    z-index: -2;
     opacity: 0.12;
     mix-blend-mode: screen;
     pointer-events: none;
@@ -68,7 +76,20 @@ body {
 .glow-2 { width: 50vw; height: 50vw; background: #f093fb; bottom: -10vh; right: -15vw; animation: drift2 20s infinite ease-in-out alternate; }
 .glow-3 { width: 35vw; height: 35vw; background: #00f2fe; top: 40%; left: 50%; transform: translate(-50%, -50%); animation: drift3 30s infinite ease-in-out alternate; }
 
-body.light-mode .ambient-glow { opacity: 0.06; mix-blend-mode: normal; }
+body.light-mode .ambient-glow { opacity: 0.08; mix-blend-mode: normal; }
+
+.ai-bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.9;
+    transition: opacity 0.5s ease;
+}
+
 
 @keyframes drift1 { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(60px, 40px) scale(1.15); } }
 @keyframes drift2 { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(-40px, -50px) scale(1.1); } }
@@ -201,7 +222,18 @@ body.light-mode .btn-primary { color: #fff; }
 .bento-card:hover::before { opacity: 1; }
 .bento-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
 
-body.light-mode .bento-card::after { background: var(--bg-color); }
+body.light-mode .bento-card {
+    box-shadow: 0 10px 30px rgba(79, 70, 229, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+body.light-mode .bento-card:hover {
+    box-shadow: 0 20px 40px rgba(79, 70, 229, 0.08), 0 1px 8px rgba(0, 0, 0, 0.03);
+}
+body.light-mode .bento-card::after { 
+    background: #ffffff; 
+}
+body.light-mode .bento-card .card-glow {
+    background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(79, 70, 229, 0.08), transparent 40%);
+}
 
 /* Mouse-following radial glow inside cards */
 .bento-card .card-glow {
@@ -226,7 +258,10 @@ body.light-mode .bento-card::after { background: var(--bg-color); }
     backdrop-filter: blur(24px) saturate(180%);
     border-bottom: 1px solid var(--glass-border);
 }
-body.light-mode .navbar.scrolled { background: rgba(248, 250, 252, 0.75); }
+body.light-mode .navbar.scrolled { 
+    background: rgba(255, 255, 255, 0.8); 
+    border-bottom-color: rgba(79, 70, 229, 0.05);
+}
 
 .nav-content { display: flex; justify-content: space-between; align-items: center; }
 .logo { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px; }
@@ -418,7 +453,14 @@ section { padding: 7rem 0; }
     font-family: var(--font-body); font-size: 1rem;
     transition: var(--transition);
 }
-body.light-mode .form-group input, body.light-mode .form-group textarea { background: #fff; }
+body.light-mode .form-group input, body.light-mode .form-group textarea { 
+    background: #ffffff; 
+    border-color: rgba(79, 70, 229, 0.12);
+}
+body.light-mode .form-group input:focus, body.light-mode .form-group textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.06), 0 0 20px rgba(79, 70, 229, 0.02);
+}
 .form-group input:focus, .form-group textarea:focus {
     outline: none; border-color: var(--primary);
     box-shadow: 0 0 0 4px rgba(0, 242, 254, 0.08), 0 0 20px rgba(0,242,254,0.05);
@@ -504,4 +546,44 @@ footer {
     .nav-links.active { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: rgba(3,3,5,0.95); backdrop-filter: blur(20px); padding: 2rem; gap: 1.5rem; border-bottom: 1px solid var(--glass-border); }
     .stats-row { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
     .stat-number { font-size: 2rem; }
+}
+
+/* Light-Mode Enhancements for Specific Elements */
+body.light-mode .stat-card {
+    background: #ffffff;
+    border-color: rgba(79, 70, 229, 0.08);
+    box-shadow: 0 8px 24px rgba(79, 70, 229, 0.02), 0 1px 3px rgba(0, 0, 0, 0.01);
+}
+body.light-mode .stat-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 16px 32px rgba(79, 70, 229, 0.06), 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+body.light-mode .skill-tag {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.04), rgba(6, 182, 212, 0.03));
+    border: 1px solid rgba(79, 70, 229, 0.08);
+    color: var(--text-secondary);
+}
+body.light-mode .skill-tag:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: rgba(79, 70, 229, 0.05);
+}
+body.light-mode .contact-icon {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.08), rgba(6, 182, 212, 0.04));
+    border: 1px solid rgba(79, 70, 229, 0.12);
+}
+body.light-mode .contact-item:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+body.light-mode .hero-badge {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.08), rgba(6, 182, 212, 0.08));
+    border-color: rgba(79, 70, 229, 0.15);
+}
+body.light-mode .hero-status {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: rgba(79, 70, 229, 0.08);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.04);
+}
+body.light-mode .nav-links.active {
+    background: rgba(255, 255, 255, 0.95);
 }
