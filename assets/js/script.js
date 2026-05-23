@@ -1,137 +1,61 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Mobile Navigation Toggle
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.querySelector('.nav-links');
-    const links = document.querySelectorAll('.nav-link');
-
-    if (hamburger && navLinks) {
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            hamburger.querySelector('i').classList.toggle('fa-bars');
-            hamburger.querySelector('i').classList.toggle('fa-times');
+    // Theme Toggle
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const body = document.body;
+    
+    if (themeToggleBtn) {
+        const themeIcon = themeToggleBtn.querySelector('i');
+        if (localStorage.getItem('theme') === 'light') {
+            body.classList.add('light-mode');
+            themeIcon.classList.replace('fa-sun', 'fa-moon');
+        }
+        
+        themeToggleBtn.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            const isLight = body.classList.contains('light-mode');
+            themeIcon.classList.replace(isLight ? 'fa-sun' : 'fa-moon', isLight ? 'fa-moon' : 'fa-sun');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
         });
     }
-
-    // Close mobile menu on link click
-    links.forEach(link => {
-        link.addEventListener('click', () => {
-            if (navLinks.classList.contains('active')) {
-                navLinks.classList.remove('active');
-                hamburger.querySelector('i').classList.remove('fa-times');
-                hamburger.querySelector('i').classList.add('fa-bars');
-            }
-        });
-    });
 
     // Navbar Scroll Effect
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
+        navbar.classList.toggle('scrolled', window.scrollY > 50);
     });
 
-    // Theme Toggle
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const body = document.body;
-
-    if (themeToggleBtn) {
-        const themeIcon = themeToggleBtn.querySelector('i');
-        const savedTheme = localStorage.getItem('theme');
-
-        if (savedTheme === 'light') {
-            body.classList.add('light-mode');
-            themeIcon.classList.remove('fa-sun');
-            themeIcon.classList.add('fa-moon');
-        }
-
-        themeToggleBtn.addEventListener('click', () => {
-            body.classList.toggle('light-mode');
-            const isLight = body.classList.contains('light-mode');
-
-            if (isLight) {
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
-                localStorage.setItem('theme', 'light');
-            } else {
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-                localStorage.setItem('theme', 'dark');
-            }
-        });
-    }
-
-    // Intersection Observer for scroll animations
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.15
-    };
-
-    const observer = new IntersectionObserver((entries, observer) => {
+    // Reveal Animations using Intersection Observer
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('appear');
-                observer.unobserve(entry.target); // Optional: re-animate on scroll up by removing this
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target); // Reveal only once
             }
         });
-    }, observerOptions);
+    }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
-    // Apply animation classes to elements
-    const animateElements = document.querySelectorAll('.fade-in, .slide-up, .zoom-in, [class*="slide-up-delay"], [class*="fade-in-delay"]');
+    revealElements.forEach(el => revealObserver.observe(el));
 
-    // Add base classes for initial state before observing
-    document.querySelectorAll('.slide-up, [class*="slide-up-delay"]').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1)';
-    });
-
-    document.querySelectorAll('.slide-up-delay-1').forEach(el => el.style.transitionDelay = '0.1s');
-    document.querySelectorAll('.slide-up-delay-2').forEach(el => el.style.transitionDelay = '0.2s');
-    document.querySelectorAll('.slide-up-delay-3').forEach(el => el.style.transitionDelay = '0.3s');
-
-    document.querySelectorAll('.fade-in-delay').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'all 0.8s ease-out';
-        el.style.transitionDelay = '0.3s';
-    });
-
-    document.querySelectorAll('.zoom-in').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'scale(0.95)';
-        el.style.transition = 'all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1)';
-    });
-
-    animateElements.forEach(el => {
-        observer.observe(el);
-    });
-
-    // Handle class addition for custom delays/transforms
-    const intersectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = entry.target.classList.contains('zoom-in') ? 'scale(1)' : 'translateY(0)';
-            }
+    // Magnetic / Radial Glow effect for Bento Cards
+    document.querySelectorAll('.bento-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
         });
-    }, observerOptions);
-
-    document.querySelectorAll('.slide-up, [class*="slide-up-delay"], .fade-in-delay, .zoom-in').forEach(el => {
-        intersectionObserver.observe(el);
     });
 
-    // Form Submission with FastAPI Backend
+    // Form Submission
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = contactForm.querySelector('button');
             const originalText = btn.innerHTML;
-
+            
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const message = document.getElementById('message').value;
@@ -145,39 +69,30 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const response = await fetch(API_URL, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name, email, message })
                 });
 
-                const data = await response.json().catch(() => ({}));
-
                 if (response.ok) {
-                    btn.innerHTML = '<i class="fas fa-check-circle"></i> Message Sent Successfully!';
-                    btn.style.background = '#10b981'; // Success color
+                    btn.innerHTML = '<i class="fas fa-check"></i> Sent successfully';
+                    btn.style.background = '#10b981';
                     contactForm.reset();
                 } else {
-                    let errMsg = 'Error Sending';
-                    if (data.detail) {
-                        errMsg = Array.isArray(data.detail) ? data.detail[0].msg : data.detail;
-                    }
-                    btn.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${errMsg}`;
-                    btn.style.background = '#ef4444'; // Error color
+                    const data = await response.json();
+                    const errMsg = data.detail ? (Array.isArray(data.detail) ? data.detail[0].msg : data.detail) : 'Error';
+                    btn.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${errMsg}`;
+                    btn.style.background = '#ef4444';
                 }
             } catch (error) {
-                console.error("Error submitting form:", error);
-                btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Network Connection Error';
-                btn.style.background = '#ef4444'; // Error color
+                btn.innerHTML = '<i class="fas fa-wifi"></i> Network Error';
+                btn.style.background = '#ef4444';
             } finally {
                 setTimeout(() => {
                     btn.innerHTML = originalText;
-                    btn.style.background = ''; // Revert to default
+                    btn.style.background = '';
                     btn.disabled = false;
                 }, 3000);
             }
         });
     }
-    // Smooth scroll for anchor links mostly handled by CSS scroll-behavior
-    // but we can add active state highlighting if needed
 });
