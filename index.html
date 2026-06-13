@@ -11,9 +11,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/styles.css?v=4">
+    <link rel="stylesheet" href="assets/css/styles.css?v=5">
 </head>
 <body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor-dot" id="cursor-dot"></div>
+    <div class="custom-cursor-ring" id="cursor-ring"></div>
+
     <!-- AI Background Canvas -->
     <canvas id="ai-background-canvas" class="ai-bg-canvas"></canvas>
 
@@ -28,10 +35,10 @@
             <a href="#" class="logo">Sanket<span class="dot">.</span></a>
             <button class="mobile-toggle" id="mobile-toggle"><i class="fas fa-bars"></i></button>
             <ul class="nav-links" id="nav-links">
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#expertise" class="nav-link">Expertise</a></li>
-                <li><a href="#experience" class="nav-link">Experience</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="#about" class="nav-link" data-section="about">About</a></li>
+                <li><a href="#expertise" class="nav-link" data-section="expertise">Expertise</a></li>
+                <li><a href="#experience" class="nav-link" data-section="experience">Experience</a></li>
+                <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
                 <li><a href="pages/admin.html" class="nav-link"><i class="fas fa-lock"></i></a></li>
                 <li><button id="theme-toggle" class="theme-toggle-btn"><i class="fas fa-sun"></i></button></li>
             </ul>
@@ -44,17 +51,30 @@
             <div class="container hero-content">
                 <div class="reveal">
                     <span class="hero-badge"><i class="fas fa-bolt"></i> Software Development Engineer in Test</span>
-                    <h1 class="titanium-text">Sanket Repale<br><span class="gradient-text">Automation Architect.<span class="typing-cursor"></span></span></h1>
+                    <h1 class="titanium-text">Sanket Repale<br><span class="gradient-text"><span class="typewriter-text" id="typewriter" data-words='["Automation Architect.", "AI Testing Pioneer.", "Quality Engineer."]'>Automation Architect.</span><span class="typing-cursor"></span></span></h1>
                     <p class="bio">I engineer bulletproof, AI-powered automated testing frameworks that accelerate delivery pipelines and guarantee software quality at enterprise scale.</p>
                     <div class="hero-cta">
-                        <a href="#experience" class="btn btn-primary">View My Work <i class="fas fa-arrow-right"></i></a>
-                        <a href="https://www.linkedin.com/in/sanket-repale-521157287" target="_blank" class="btn btn-outline"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
-                        <a href="assets/Sanket_Repale_Resume.docx" download class="btn btn-outline"><i class="fas fa-download"></i> Resume</a>
+                        <span class="magnetic-btn"><a href="#experience" class="btn btn-primary">View My Work <i class="fas fa-arrow-right"></i></a></span>
+                        <span class="magnetic-btn"><a href="https://www.linkedin.com/in/sanket-repale-521157287" target="_blank" class="btn btn-outline"><i class="fab fa-linkedin-in"></i> LinkedIn</a></span>
+                        <span class="magnetic-btn"><a href="assets/Sanket_Repale_Resume.docx" download class="btn btn-outline"><i class="fas fa-download"></i> Resume</a></span>
                     </div>
                 </div>
                 <div class="hero-image-wrap reveal bento-card stagger-3" style="padding: 0;">
                     <div class="card-glow"></div>
                     <img src="assets/images/profile.png" alt="Sanket Prakash Repale">
+                    <!-- Orbiting Tech Icons -->
+                    <div class="orbit-container">
+                        <div class="orbit-ring orbit-ring-1">
+                            <span class="orbit-icon" style="top: -18px; left: 50%; transform: translateX(-50%);"><i class="fas fa-robot"></i></span>
+                            <span class="orbit-icon" style="bottom: -18px; left: 50%; transform: translateX(-50%);"><i class="fas fa-code"></i></span>
+                            <span class="orbit-icon" style="top: 50%; right: -18px; transform: translateY(-50%);"><i class="fas fa-vial"></i></span>
+                        </div>
+                        <div class="orbit-ring orbit-ring-2">
+                            <span class="orbit-icon" style="top: -18px; left: 50%; transform: translateX(-50%);"><i class="fas fa-server"></i></span>
+                            <span class="orbit-icon" style="bottom: -18px; left: 50%; transform: translateX(-50%);"><i class="fas fa-bolt"></i></span>
+                            <span class="orbit-icon" style="top: 50%; left: -18px; transform: translateY(-50%);"><i class="fas fa-cloud"></i></span>
+                        </div>
+                    </div>
                     <div class="hero-status">
                         <span class="status-dot"></span> Available for opportunities
                     </div>
@@ -65,21 +85,55 @@
         <!-- ══════════ STATS ══════════ -->
         <section style="padding: 4rem 0;">
             <div class="container">
+                <!-- SVG gradient definition for stat rings -->
+                <svg width="0" height="0" style="position:absolute;">
+                    <defs>
+                        <linearGradient id="stat-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#00f2fe"/>
+                            <stop offset="50%" stop-color="#f093fb"/>
+                            <stop offset="100%" stop-color="#4facfe"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
                 <div class="stats-row">
-                    <div class="stat-card reveal stagger-1">
-                        <div class="stat-number"><span class="gradient-text" data-count="3">0</span>+</div>
+                    <div class="stat-card reveal stagger-1" data-ring-percent="75">
+                        <div class="stat-ring-wrap">
+                            <svg viewBox="0 0 90 90">
+                                <circle class="stat-ring-bg" cx="45" cy="45" r="40"/>
+                                <circle class="stat-ring-fill" cx="45" cy="45" r="40"/>
+                            </svg>
+                            <div class="stat-number"><span class="gradient-text" data-count="3">0</span>+</div>
+                        </div>
                         <div class="stat-label">Years Experience</div>
                     </div>
-                    <div class="stat-card reveal stagger-2">
-                        <div class="stat-number"><span class="gradient-text" data-count="75">0</span>%</div>
+                    <div class="stat-card reveal stagger-2" data-ring-percent="75">
+                        <div class="stat-ring-wrap">
+                            <svg viewBox="0 0 90 90">
+                                <circle class="stat-ring-bg" cx="45" cy="45" r="40"/>
+                                <circle class="stat-ring-fill" cx="45" cy="45" r="40"/>
+                            </svg>
+                            <div class="stat-number"><span class="gradient-text" data-count="75">0</span>%</div>
+                        </div>
                         <div class="stat-label">Regression Time Reduced</div>
                     </div>
-                    <div class="stat-card reveal stagger-3">
-                        <div class="stat-number"><span class="gradient-text" data-count="5">0</span>+</div>
+                    <div class="stat-card reveal stagger-3" data-ring-percent="60">
+                        <div class="stat-ring-wrap">
+                            <svg viewBox="0 0 90 90">
+                                <circle class="stat-ring-bg" cx="45" cy="45" r="40"/>
+                                <circle class="stat-ring-fill" cx="45" cy="45" r="40"/>
+                            </svg>
+                            <div class="stat-number"><span class="gradient-text" data-count="5">0</span>+</div>
+                        </div>
                         <div class="stat-label">Certifications</div>
                     </div>
-                    <div class="stat-card reveal stagger-4">
-                        <div class="stat-number"><span class="gradient-text" data-count="3">0</span></div>
+                    <div class="stat-card reveal stagger-4" data-ring-percent="50">
+                        <div class="stat-ring-wrap">
+                            <svg viewBox="0 0 90 90">
+                                <circle class="stat-ring-bg" cx="45" cy="45" r="40"/>
+                                <circle class="stat-ring-fill" cx="45" cy="45" r="40"/>
+                            </svg>
+                            <div class="stat-number"><span class="gradient-text" data-count="3">0</span></div>
+                        </div>
                         <div class="stat-label">Industry Awards</div>
                     </div>
                 </div>
@@ -98,6 +152,7 @@
                     <!-- Agentic AI - Featured Card -->
                     <div class="bento-card bento-item-large reveal stagger-1">
                         <div class="card-glow"></div>
+                        <canvas class="sparkle-canvas"></canvas>
                         <div class="bento-content">
                             <div class="skill-icon-wrap"><i class="fas fa-robot"></i></div>
                             <h3>Agentic AI Testing</h3>
@@ -114,6 +169,7 @@
                     <!-- UI Automation -->
                     <div class="bento-card bento-item-small reveal stagger-2">
                         <div class="card-glow"></div>
+                        <canvas class="sparkle-canvas"></canvas>
                         <div class="bento-content">
                             <div class="skill-icon-wrap"><i class="fas fa-vial"></i></div>
                             <h3>UI Automation</h3>
@@ -129,6 +185,7 @@
                     <!-- API Testing -->
                     <div class="bento-card bento-item-small reveal stagger-1">
                         <div class="card-glow"></div>
+                        <canvas class="sparkle-canvas"></canvas>
                         <div class="bento-content">
                             <div class="skill-icon-wrap"><i class="fas fa-network-wired"></i></div>
                             <h3>API & Service Testing</h3>
@@ -144,6 +201,7 @@
                     <!-- CI/CD -->
                     <div class="bento-card bento-item-large reveal stagger-2">
                         <div class="card-glow"></div>
+                        <canvas class="sparkle-canvas"></canvas>
                         <div class="bento-content">
                             <div class="skill-icon-wrap"><i class="fas fa-server"></i></div>
                             <h3>CI/CD & DevOps Integration</h3>
@@ -160,6 +218,7 @@
                     <!-- Languages -->
                     <div class="bento-card bento-item-medium reveal stagger-1">
                         <div class="card-glow"></div>
+                        <canvas class="sparkle-canvas"></canvas>
                         <div class="bento-content">
                             <div class="skill-icon-wrap"><i class="fas fa-code"></i></div>
                             <h3>Programming Languages</h3>
@@ -176,6 +235,7 @@
                     <!-- Tools -->
                     <div class="bento-card bento-item-medium reveal stagger-2">
                         <div class="card-glow"></div>
+                        <canvas class="sparkle-canvas"></canvas>
                         <div class="bento-content">
                             <div class="skill-icon-wrap"><i class="fas fa-toolbox"></i></div>
                             <h3>Tools & Platforms</h3>
@@ -209,28 +269,42 @@
                         </div>
                         <div class="bento-content">
                             <div class="card-glow"></div>
-                            <!-- ZS Associates -->
-                            <span class="exp-date">MAY 2025 - PRESENT</span>
-                            <h3>SDET at ZS Associates</h3>
-                            <ul class="exp-list" style="list-style-type: disc;">
-                                <li>Architecting next-generation <strong>Agentic AI-based automation testing frameworks</strong> spanning UI, API, ETL, and Performance layers for enterprise-scale product development.</li>
-                                <li>Orchestrating autonomous test generation and intelligent execution via AI backend systems, reducing manual scripting effort by an estimated <strong>60%</strong>.</li>
-                                <li>Implementing <strong>self-healing test capabilities</strong> powered by AI agents that autonomously detect and adapt to UI/API changes, minimizing maintenance overhead.</li>
-                                <li>Leading cross-team integration to bridge AI-driven testing with legacy enterprise environments.</li>
-                            </ul>
-                            
-                            <hr style="border: none; border-top: 1px solid var(--glass-border); margin: 1.5rem 0;">
+                            <div class="timeline-connector" id="timeline-connector">
+                                <!-- ZS Associates -->
+                                <div style="position: relative;">
+                                    <div class="timeline-dot"></div>
+                                    <span class="exp-date">MAY 2025 - PRESENT</span>
+                                    <h3>SDET at ZS Associates</h3>
+                                    <div class="exp-list-collapsible" id="exp-zs">
+                                        <ul class="exp-list" style="list-style-type: disc;">
+                                            <li>Architecting next-generation <strong>Agentic AI-based automation testing frameworks</strong> spanning UI, API, ETL, and Performance layers for enterprise-scale product development.</li>
+                                            <li>Orchestrating autonomous test generation and intelligent execution via AI backend systems, reducing manual scripting effort by an estimated <strong>60%</strong>.</li>
+                                            <li>Implementing <strong>self-healing test capabilities</strong> powered by AI agents that autonomously detect and adapt to UI/API changes, minimizing maintenance overhead.</li>
+                                            <li>Leading cross-team integration to bridge AI-driven testing with legacy enterprise environments.</li>
+                                        </ul>
+                                    </div>
+                                    <button class="show-more-btn" data-target="exp-zs" style="display:none;">Show more <i class="fas fa-chevron-down" style="font-size:0.7rem; margin-left:4px;"></i></button>
+                                </div>
+                                
+                                <hr style="border: none; border-top: 1px solid var(--glass-border); margin: 1.5rem 0;">
 
-                            <!-- LTIMindtree -->
-                            <span class="exp-date">MAY 2022 - MAY 2025</span>
-                            <h3>SDET at LTIMindtree</h3>
-                            <ul class="exp-list" style="list-style-type: disc;">
-                                <li>Engineered scalable automated test scripts using C# and Selenium WebDriver based on the <strong>Page Object Model (POM)</strong> design pattern.</li>
-                                <li>Drove a <strong>75% reduction</strong> in regression testing execution times by refactoring legacy manual test cases into optimized automated suites.</li>
-                                <li>Managed end-to-end <strong>STLC</strong> — from requirements analysis and test strategy to execution and defect management across multiple concurrent projects.</li>
-                                <li>Integrated automated test suites into <strong>Azure DevOps CI/CD pipelines</strong>, enabling continuous validation on every commit.</li>
-                                <li>Validated RESTful and SOAP services using Ready API and Postman, ensuring data integrity and security compliance.</li>
-                            </ul>
+                                <!-- LTIMindtree -->
+                                <div style="position: relative;">
+                                    <div class="timeline-dot"></div>
+                                    <span class="exp-date">MAY 2022 - MAY 2025</span>
+                                    <h3>SDET at LTIMindtree</h3>
+                                    <div class="exp-list-collapsible" id="exp-lti">
+                                        <ul class="exp-list" style="list-style-type: disc;">
+                                            <li>Engineered scalable automated test scripts using C# and Selenium WebDriver based on the <strong>Page Object Model (POM)</strong> design pattern.</li>
+                                            <li>Drove a <strong>75% reduction</strong> in regression testing execution times by refactoring legacy manual test cases into optimized automated suites.</li>
+                                            <li>Managed end-to-end <strong>STLC</strong> — from requirements analysis and test strategy to execution and defect management across multiple concurrent projects.</li>
+                                            <li>Integrated automated test suites into <strong>Azure DevOps CI/CD pipelines</strong>, enabling continuous validation on every commit.</li>
+                                            <li>Validated RESTful and SOAP services using Ready API and Postman, ensuring data integrity and security compliance.</li>
+                                        </ul>
+                                    </div>
+                                    <button class="show-more-btn" data-target="exp-lti">Show more <i class="fas fa-chevron-down" style="font-size:0.7rem; margin-left:4px;"></i></button>
+                                </div>
+                            </div>
                             
                             <div class="skill-tags" style="padding-top: 0.5rem;">
                                 <span class="skill-tag">Agentic AI</span>
@@ -247,6 +321,7 @@
                     <!-- Certifications -->
                     <div class="bento-card bento-item-medium reveal stagger-1">
                         <div class="card-glow"></div>
+                        <canvas class="sparkle-canvas"></canvas>
                         <div class="bento-content">
                             <div class="skill-icon-wrap"><i class="fas fa-certificate"></i></div>
                             <h3>Certifications</h3>
@@ -263,6 +338,7 @@
                     <!-- Awards -->
                     <div class="bento-card bento-item-medium reveal stagger-2">
                         <div class="card-glow"></div>
+                        <canvas class="sparkle-canvas"></canvas>
                         <div class="bento-content">
                             <div class="skill-icon-wrap"><i class="fas fa-trophy"></i></div>
                             <h3>Awards & Recognition</h3>
@@ -321,13 +397,16 @@
                         
                         <form class="contact-form" id="contact-form">
                             <div class="form-group">
-                                <input type="text" id="name" placeholder="Your Name" required minlength="2">
+                                <input type="text" id="name" placeholder=" " required minlength="2">
+                                <label for="name">Your Name</label>
                             </div>
                             <div class="form-group">
-                                <input type="email" id="email" placeholder="Email Address" required>
+                                <input type="email" id="email" placeholder=" " required>
+                                <label for="email">Email Address</label>
                             </div>
                             <div class="form-group">
-                                <textarea id="message" rows="5" placeholder="Tell me about your project or opportunity..." required minlength="10"></textarea>
+                                <textarea id="message" rows="5" placeholder=" " required minlength="10"></textarea>
+                                <label for="message">Tell me about your project or opportunity...</label>
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Send Message <i class="fas fa-paper-plane"></i></button>
                         </form>
@@ -337,19 +416,32 @@
         </section>
     </main>
 
+    <!-- Wave Divider -->
+    <div class="wave-divider">
+        <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+            <path class="wave-fill" d="M0,40 C360,100 720,0 1080,60 C1260,90 1440,40 1440,40 L1440,100 L0,100 Z M1440,40 C1800,100 2160,0 2520,60 C2700,90 2880,40 2880,40 L2880,100 L1440,100 Z"/>
+            <path d="M0,40 C360,100 720,0 1080,60 C1260,90 1440,40 1440,40 M1440,40 C1800,100 2160,0 2520,60 C2700,90 2880,40 2880,40"/>
+        </svg>
+    </div>
+
     <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-logo titanium-text">Sanket.</div>
             <p>&copy; 2026 Sanket Prakash Repale. Engineered for performance.</p>
             <div class="footer-socials">
-                <a href="https://www.linkedin.com/in/sanket-repale-521157287" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                <a href="https://github.com/SanketRepale" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="mailto:sanketrepale123@gmail.com"><i class="fas fa-envelope"></i></a>
+                <a href="https://www.linkedin.com/in/sanket-repale-521157287" target="_blank" class="social-linkedin"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://github.com/SanketRepale" target="_blank" class="social-github"><i class="fab fa-github"></i></a>
+                <a href="mailto:sanketrepale123@gmail.com" class="social-email"><i class="fas fa-envelope"></i></a>
             </div>
         </div>
     </footer>
 
-    <script src="assets/js/script.js?v=4"></script>
+    <!-- Back to Top -->
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="assets/js/script.js?v=5"></script>
 </body>
 </html>

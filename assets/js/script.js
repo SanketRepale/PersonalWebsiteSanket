@@ -57,6 +57,38 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ═══════════════════════════════════════════
+    // SCROLL PROGRESS BAR
+    // ═══════════════════════════════════════════
+    const scrollProgress = document.getElementById('scroll-progress');
+    if (scrollProgress) {
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            scrollProgress.style.width = scrollPercent + '%';
+        });
+    }
+
+    // ═══════════════════════════════════════════
+    // ACTIVE NAV LINK TRACKING
+    // ═══════════════════════════════════════════
+    const sections = document.querySelectorAll('section[id]');
+    const navLinksAll = document.querySelectorAll('.nav-link[data-section]');
+    
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.getAttribute('id');
+                navLinksAll.forEach(link => {
+                    link.classList.toggle('active-link', link.dataset.section === id);
+                });
+            }
+        });
+    }, { threshold: 0.3, rootMargin: '-100px 0px -40% 0px' });
+
+    sections.forEach(section => sectionObserver.observe(section));
+
+    // ═══════════════════════════════════════════
     // SCROLL REVEAL ANIMATIONS
     // ═══════════════════════════════════════════
     const revealClasses = ['.reveal', '.reveal-left', '.reveal-right', '.reveal-scale'];
@@ -74,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
     allReveals.forEach(el => revealObserver.observe(el));
 
     // ═══════════════════════════════════════════
-    // ANIMATED STAT COUNTERS
+    // ANIMATED STAT COUNTERS + RING ANIMATION
     // ═══════════════════════════════════════════
     const counters = document.querySelectorAll('[data-count]');
     const counterObserver = new IntersectionObserver((entries, observer) => {
@@ -92,6 +124,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     entry.target.textContent = Math.floor(current);
                 }, 16);
+
+                // Animate the ring on the parent stat-card
+                const statCard = entry.target.closest('.stat-card');
+                if (statCard) {
+                    const ringPercent = parseInt(statCard.dataset.ringPercent) || 50;
+                    const circumference = 2 * Math.PI * 40; // r=40
+                    const offset = circumference - (circumference * ringPercent / 100);
+                    const ringFill = statCard.querySelector('.stat-ring-fill');
+                    if (ringFill) {
+                        ringFill.style.setProperty('--ring-offset', offset);
+                        statCard.classList.add('counted');
+                    }
+                }
+
                 observer.unobserve(entry.target);
             }
         });
@@ -100,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
     counters.forEach(counter => counterObserver.observe(counter));
 
     // ═══════════════════════════════════════════
-    // BENTO CARD - MOUSE GLOW + GRADIENT BORDER ROTATION
+    // BENTO CARD - MOUSE GLOW + GRADIENT BORDER + 3D TILT
     // ═══════════════════════════════════════════
     document.querySelectorAll('.bento-card').forEach(card => {
         card.addEventListener('mousemove', e => {
@@ -120,6 +166,220 @@ document.addEventListener('DOMContentLoaded', () => {
             const cy = rect.height / 2;
             const angle = Math.atan2(y - cy, x - cx) * (180 / Math.PI);
             card.style.setProperty('--card-angle', `${angle + 180}deg`);
+
+            // 3D Tilt effect
+            const tiltX = ((y - cy) / cy) * 4; // max 4deg
+            const tiltY = ((x - cx) / cx) * -4;
+            card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-2px)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+        });
+
+        // Sparkle effect on mouse enter
+        const sparkleCanvas = card.querySelector('.sparkle-canvas');
+        if (sparkleCanvas) {
+            card.addEventListener('mouseenter', (e) => {
+                createSparkles(sparkleCanvas, e, card);
+            });
+        }
+    });
+
+    // ═══════════════════════════════════════════
+    // SPARKLE PARTICLE SYSTEM
+    // ═══════════════════════════════════════════
+    function createSparkles(canvas, event, card) {
+        const ctx = canvas.getContext('2d');
+        const rect = card.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+        
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        const sparkles = [];
+        const count = 12;
+        const isLight = document.body.classList.contains('light-mode');
+
+        for (let i = 0; i < count; i++) {
+            sparkles.push({
+                x, y,
+                vx: (Math.random() - 0.5) * 4,
+                vy: (Math.random() - 0.5) * 4,
+                radius: Math.random() * 3 + 1,
+                alpha: 1,
+                color: isLight 
+                    ? `hsla(${240 + Math.random() * 60}, 80%, 60%, ` 
+                    : `hsla(${180 + Math.random() * 60}, 100%, 70%, `
+            });
+        }
+
+        let frame = 0;
+        function animateSparkles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let alive = false;
+            sparkles.forEach(s => {
+                if (s.alpha <= 0) return;
+                alive = true;
+                s.x += s.vx;
+                s.y += s.vy;
+                s.alpha -= 0.025;
+                s.radius *= 0.97;
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+                ctx.fillStyle = s.color + s.alpha + ')';
+                ctx.fill();
+            });
+            frame++;
+            if (alive && frame < 60) {
+                requestAnimationFrame(animateSparkles);
+            } else {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+        animateSparkles();
+    }
+
+    // ═══════════════════════════════════════════
+    // TYPEWRITER EFFECT
+    // ═══════════════════════════════════════════
+    const typewriterEl = document.getElementById('typewriter');
+    if (typewriterEl) {
+        const words = JSON.parse(typewriterEl.dataset.words);
+        let wordIndex = 0;
+        let charIndex = words[0].length; // Start fully typed
+        let isDeleting = false;
+        let typeDelay = 2500; // Initial pause before starting to delete
+
+        function typeWrite() {
+            const currentWord = words[wordIndex];
+            
+            if (isDeleting) {
+                charIndex--;
+                typeDelay = 40;
+            } else {
+                charIndex++;
+                typeDelay = 80;
+            }
+
+            typewriterEl.textContent = currentWord.substring(0, charIndex);
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                typeDelay = 2500; // Pause at end
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                typeDelay = 400; // Pause before typing next
+            }
+
+            setTimeout(typeWrite, typeDelay);
+        }
+
+        setTimeout(typeWrite, 2500); // Initial delay before cycling starts
+    }
+
+    // ═══════════════════════════════════════════
+    // MAGNETIC BUTTON EFFECT
+    // ═══════════════════════════════════════════
+    document.querySelectorAll('.magnetic-btn').forEach(wrapper => {
+        const btn = wrapper.querySelector('.btn');
+        if (!btn) return;
+
+        wrapper.addEventListener('mousemove', (e) => {
+            const rect = wrapper.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+        });
+
+        wrapper.addEventListener('mouseleave', () => {
+            btn.style.transform = 'translate(0, 0)';
+        });
+    });
+
+    // ═══════════════════════════════════════════
+    // CUSTOM CURSOR
+    // ═══════════════════════════════════════════
+    const cursorDot = document.getElementById('cursor-dot');
+    const cursorRing = document.getElementById('cursor-ring');
+    
+    if (cursorDot && cursorRing && window.innerWidth > 768) {
+        let cursorX = 0, cursorY = 0;
+        let ringX = 0, ringY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            cursorX = e.clientX;
+            cursorY = e.clientY;
+            cursorDot.style.left = cursorX + 'px';
+            cursorDot.style.top = cursorY + 'px';
+        });
+
+        // Smooth ring follow
+        function animateRing() {
+            ringX += (cursorX - ringX) * 0.15;
+            ringY += (cursorY - ringY) * 0.15;
+            cursorRing.style.left = ringX + 'px';
+            cursorRing.style.top = ringY + 'px';
+            requestAnimationFrame(animateRing);
+        }
+        animateRing();
+
+        // Hover effect on interactive elements
+        const interactiveElements = document.querySelectorAll('a, button, .btn, .skill-tag, .bento-card');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursorRing.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => cursorRing.classList.remove('cursor-hover'));
+        });
+    }
+
+    // ═══════════════════════════════════════════
+    // BACK TO TOP BUTTON
+    // ═══════════════════════════════════════════
+    const backToTop = document.getElementById('back-to-top');
+    if (backToTop) {
+        window.addEventListener('scroll', () => {
+            backToTop.classList.toggle('visible', window.scrollY > window.innerHeight * 0.5);
+        });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    // ═══════════════════════════════════════════
+    // TIMELINE CONNECTOR ANIMATION
+    // ═══════════════════════════════════════════
+    const timelineConnector = document.getElementById('timeline-connector');
+    if (timelineConnector) {
+        const timelineObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    timelineObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+        timelineObserver.observe(timelineConnector);
+    }
+
+    // ═══════════════════════════════════════════
+    // EXPERIENCE EXPAND/COLLAPSE
+    // ═══════════════════════════════════════════
+    document.querySelectorAll('.show-more-btn').forEach(btn => {
+        const targetId = btn.dataset.target;
+        const targetEl = document.getElementById(targetId);
+        if (!targetEl) return;
+
+        // Check if content is actually taller than max-height
+        if (targetEl.scrollHeight > 200) {
+            btn.style.display = 'inline-flex';
+        }
+
+        btn.addEventListener('click', () => {
+            const isExpanded = targetEl.classList.toggle('expanded');
+            btn.innerHTML = isExpanded 
+                ? 'Show less <i class="fas fa-chevron-up" style="font-size:0.7rem; margin-left:4px;"></i>'
+                : 'Show more <i class="fas fa-chevron-down" style="font-size:0.7rem; margin-left:4px;"></i>';
         });
     });
 
@@ -137,8 +397,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ═══════════════════════════════════════════
-    // CONTACT FORM SUBMISSION
+    // CONTACT FORM SUBMISSION + CONFETTI
     // ═══════════════════════════════════════════
+    function launchConfetti() {
+        const container = document.createElement('div');
+        container.className = 'confetti-container';
+        document.body.appendChild(container);
+
+        const colors = ['#00f2fe', '#f093fb', '#4facfe', '#ffd700', '#10b981', '#ec4899'];
+        for (let i = 0; i < 60; i++) {
+            const piece = document.createElement('div');
+            piece.className = 'confetti-piece';
+            piece.style.left = Math.random() * 100 + '%';
+            piece.style.top = '-10px';
+            piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            piece.style.animationDelay = Math.random() * 0.8 + 's';
+            piece.style.animationDuration = (2 + Math.random() * 2) + 's';
+            piece.style.width = (6 + Math.random() * 6) + 'px';
+            piece.style.height = (6 + Math.random() * 6) + 'px';
+            piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+            container.appendChild(piece);
+        }
+
+        setTimeout(() => container.remove(), 4000);
+    }
+
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', async (e) => {
@@ -167,6 +450,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     btn.innerHTML = '<i class="fas fa-check"></i> Sent successfully!';
                     btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
                     contactForm.reset();
+                    launchConfetti();
                 } else {
                     const data = await response.json();
                     const errMsg = data.detail ? (Array.isArray(data.detail) ? data.detail[0].msg : data.detail) : 'Error';
@@ -187,7 +471,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ═══════════════════════════════════════════
-    // AI BACKGROUND CANVAS ANIMATION
+    // AI BACKGROUND CANVAS ANIMATION (Enhanced)
     // ═══════════════════════════════════════════
     const canvas = document.getElementById('ai-background-canvas');
     if (canvas) {
@@ -210,14 +494,32 @@ document.addEventListener('DOMContentLoaded', () => {
             constructor() {
                 this.x = Math.random() * window.innerWidth;
                 this.y = Math.random() * window.innerHeight;
-                this.vx = (Math.random() - 0.5) * 0.35; // Slow, elegant movement
+                this.vx = (Math.random() - 0.5) * 0.35;
                 this.vy = (Math.random() - 0.5) * 0.35;
-                this.radius = Math.random() * 2 + 1;
+                this.baseRadius = Math.random() * 2 + 1;
+                this.radius = this.baseRadius;
+                this.pulseSpeed = 0.01 + Math.random() * 0.02;
+                this.pulsePhase = Math.random() * Math.PI * 2;
             }
 
-            update() {
+            update(time) {
                 this.x += this.vx;
                 this.y += this.vy;
+
+                // Pulsing radius
+                this.radius = this.baseRadius + Math.sin(time * this.pulseSpeed + this.pulsePhase) * 0.6;
+
+                // Mouse repulsion
+                if (mouse.x !== null && mouse.y !== null) {
+                    const dx = this.x - mouse.x;
+                    const dy = this.y - mouse.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < mouse.radius * 0.7) {
+                        const force = (1 - dist / (mouse.radius * 0.7)) * 0.8;
+                        this.x += (dx / dist) * force;
+                        this.y += (dy / dist) * force;
+                    }
+                }
 
                 // Bounce at screen edges
                 if (this.x < 0 || this.x > window.innerWidth) this.vx *= -1;
@@ -234,7 +536,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function initParticles() {
             particles = [];
-            // Dynamically scale particle count with screen width
             const particleCount = Math.min(Math.floor((window.innerWidth * window.innerHeight) / 16000), 80);
             for (let i = 0; i < particleCount; i++) {
                 particles.push(new Particle());
@@ -251,23 +552,25 @@ document.addEventListener('DOMContentLoaded', () => {
             mouse.y = null;
         });
 
+        let animTime = 0;
         function animate() {
+            animTime++;
             ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
             const isLight = document.body.classList.contains('light-mode');
-            // Fetch colors according to the current theme
             const nodeColor = isLight ? 'rgba(79, 70, 229, 0.28)' : 'rgba(0, 242, 254, 0.2)';
             const lineColorRaw = isLight ? { r: 79, g: 70, b: 229 } : { r: 0, g: 242, b: 254 };
+            const warmColorRaw = isLight ? { r: 236, g: 72, b: 153 } : { r: 240, g: 147, b: 251 };
             const mouseLineColorRaw = isLight ? { r: 236, g: 72, b: 153 } : { r: 240, g: 147, b: 251 };
             const maxDistance = 140;
 
             // Update & Draw Particles
             for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
+                particles[i].update(animTime);
                 particles[i].draw(nodeColor);
             }
 
-            // Draw Connection Lines between nodes
+            // Draw Connection Lines between nodes with distance-based color
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
@@ -275,11 +578,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     const dist = Math.sqrt(dx * dx + dy * dy);
 
                     if (dist < maxDistance) {
-                        const alpha = (1 - dist / maxDistance) * (isLight ? 0.22 : 0.12);
+                        const ratio = 1 - dist / maxDistance;
+                        const alpha = ratio * (isLight ? 0.22 : 0.12);
+                        
+                        // Color shifts from cool to warm as particles are closer
+                        const r = Math.round(lineColorRaw.r + (warmColorRaw.r - lineColorRaw.r) * ratio * 0.5);
+                        const g = Math.round(lineColorRaw.g + (warmColorRaw.g - lineColorRaw.g) * ratio * 0.5);
+                        const b = Math.round(lineColorRaw.b + (warmColorRaw.b - lineColorRaw.b) * ratio * 0.5);
+
                         ctx.beginPath();
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.strokeStyle = `rgba(${lineColorRaw.r}, ${lineColorRaw.g}, ${lineColorRaw.b}, ${alpha})`;
+                        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
                         ctx.lineWidth = 1;
                         ctx.stroke();
                     }
@@ -311,4 +621,3 @@ document.addEventListener('DOMContentLoaded', () => {
         animate();
     }
 });
-
