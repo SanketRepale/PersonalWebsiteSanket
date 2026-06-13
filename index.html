@@ -11,11 +11,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/styles.css?v=5">
+    <link rel="stylesheet" href="assets/css/styles.css?v=6">
 </head>
 <body>
     <!-- Scroll Progress Bar -->
     <div class="scroll-progress" id="scroll-progress"></div>
+
+    <!-- Scanline Overlay -->
+    <div class="scanline-overlay"></div>
+
+    <!-- Tech Grid Background -->
+    <div class="tech-grid"></div>
 
     <!-- Custom Cursor -->
     <div class="custom-cursor-dot" id="cursor-dot"></div>
@@ -51,7 +57,7 @@
             <div class="container hero-content">
                 <div class="reveal">
                     <span class="hero-badge"><i class="fas fa-bolt"></i> Software Development Engineer in Test</span>
-                    <h1 class="titanium-text">Sanket Repale<br><span class="gradient-text"><span class="typewriter-text" id="typewriter" data-words='["Automation Architect.", "AI Testing Pioneer.", "Quality Engineer."]'>Automation Architect.</span><span class="typing-cursor"></span></span></h1>
+                    <h1 class="titanium-text glitch-text" data-text="Sanket Repale">Sanket Repale<br><span class="gradient-text"><span class="typewriter-text" id="typewriter" data-words='["Automation Architect.", "AI Testing Pioneer.", "Quality Engineer.", "Framework Builder."]'>Automation Architect.</span><span class="typing-cursor"></span></span></h1>
                     <p class="bio">I engineer bulletproof, AI-powered automated testing frameworks that accelerate delivery pipelines and guarantee software quality at enterprise scale.</p>
                     <div class="hero-cta">
                         <span class="magnetic-btn"><a href="#experience" class="btn btn-primary">View My Work <i class="fas fa-arrow-right"></i></a></span>
@@ -61,22 +67,28 @@
                 </div>
                 <div class="hero-image-wrap reveal bento-card stagger-3" style="padding: 0;">
                     <div class="card-glow"></div>
+                    <div class="hud-corner top-left"></div>
+                    <div class="hud-corner top-right"></div>
+                    <div class="hud-corner bottom-left"></div>
+                    <div class="hud-corner bottom-right"></div>
                     <img src="assets/images/profile.png" alt="Sanket Prakash Repale">
+                    <!-- Holographic Scan Line -->
+                    <div class="holo-scan"></div>
                     <!-- Orbiting Tech Icons -->
                     <div class="orbit-container">
                         <div class="orbit-ring orbit-ring-1">
-                            <span class="orbit-icon" style="top: -18px; left: 50%; transform: translateX(-50%);"><i class="fas fa-robot"></i></span>
-                            <span class="orbit-icon" style="bottom: -18px; left: 50%; transform: translateX(-50%);"><i class="fas fa-code"></i></span>
-                            <span class="orbit-icon" style="top: 50%; right: -18px; transform: translateY(-50%);"><i class="fas fa-vial"></i></span>
+                            <span class="orbit-icon" style="top: -17px; left: 50%; transform: translateX(-50%);"><i class="fas fa-robot"></i></span>
+                            <span class="orbit-icon" style="bottom: -17px; left: 50%; transform: translateX(-50%);"><i class="fas fa-code"></i></span>
+                            <span class="orbit-icon" style="top: 50%; right: -17px; transform: translateY(-50%);"><i class="fas fa-vial"></i></span>
                         </div>
                         <div class="orbit-ring orbit-ring-2">
-                            <span class="orbit-icon" style="top: -18px; left: 50%; transform: translateX(-50%);"><i class="fas fa-server"></i></span>
-                            <span class="orbit-icon" style="bottom: -18px; left: 50%; transform: translateX(-50%);"><i class="fas fa-bolt"></i></span>
-                            <span class="orbit-icon" style="top: 50%; left: -18px; transform: translateY(-50%);"><i class="fas fa-cloud"></i></span>
+                            <span class="orbit-icon" style="top: -17px; left: 50%; transform: translateX(-50%);"><i class="fas fa-server"></i></span>
+                            <span class="orbit-icon" style="bottom: -17px; left: 50%; transform: translateX(-50%);"><i class="fas fa-bolt"></i></span>
+                            <span class="orbit-icon" style="top: 50%; left: -17px; transform: translateY(-50%);"><i class="fas fa-cloud"></i></span>
                         </div>
                     </div>
                     <div class="hero-status">
-                        <span class="status-dot"></span> Available for opportunities
+                        <span class="status-dot"></span> ONLINE — Available
                     </div>
                 </div>
             </div>
@@ -85,13 +97,14 @@
         <!-- ══════════ STATS ══════════ -->
         <section style="padding: 4rem 0;">
             <div class="container">
+                <div class="energy-divider"></div>
                 <!-- SVG gradient definition for stat rings -->
                 <svg width="0" height="0" style="position:absolute;">
                     <defs>
                         <linearGradient id="stat-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%" stop-color="#00f2fe"/>
                             <stop offset="50%" stop-color="#f093fb"/>
-                            <stop offset="100%" stop-color="#4facfe"/>
+                            <stop offset="100%" stop-color="#39ff14"/>
                         </linearGradient>
                     </defs>
                 </svg>
@@ -114,7 +127,7 @@
                             </svg>
                             <div class="stat-number"><span class="gradient-text" data-count="75">0</span>%</div>
                         </div>
-                        <div class="stat-label">Regression Time Reduced</div>
+                        <div class="stat-label">Regression Reduced</div>
                     </div>
                     <div class="stat-card reveal stagger-3" data-ring-percent="60">
                         <div class="stat-ring-wrap">
@@ -144,7 +157,8 @@
         <section id="expertise">
             <div class="container">
                 <div class="section-header reveal">
-                    <h2 class="titanium-text">Core Expertise</h2>
+                    <span class="hud-label">SYS::CAPABILITIES</span>
+                    <h2 class="titanium-text glitch-text" data-text="Core Expertise">Core Expertise</h2>
                     <p>Modern testing ecosystems engineered for high-performance engineering teams and rapid delivery cycles.</p>
                 </div>
 
@@ -152,6 +166,10 @@
                     <!-- Agentic AI - Featured Card -->
                     <div class="bento-card bento-item-large reveal stagger-1">
                         <div class="card-glow"></div>
+                        <div class="hud-corner top-left"></div>
+                        <div class="hud-corner top-right"></div>
+                        <div class="hud-corner bottom-left"></div>
+                        <div class="hud-corner bottom-right"></div>
                         <canvas class="sparkle-canvas"></canvas>
                         <div class="bento-content">
                             <div class="skill-icon-wrap"><i class="fas fa-robot"></i></div>
@@ -169,6 +187,10 @@
                     <!-- UI Automation -->
                     <div class="bento-card bento-item-small reveal stagger-2">
                         <div class="card-glow"></div>
+                        <div class="hud-corner top-left"></div>
+                        <div class="hud-corner top-right"></div>
+                        <div class="hud-corner bottom-left"></div>
+                        <div class="hud-corner bottom-right"></div>
                         <canvas class="sparkle-canvas"></canvas>
                         <div class="bento-content">
                             <div class="skill-icon-wrap"><i class="fas fa-vial"></i></div>
@@ -185,6 +207,10 @@
                     <!-- API Testing -->
                     <div class="bento-card bento-item-small reveal stagger-1">
                         <div class="card-glow"></div>
+                        <div class="hud-corner top-left"></div>
+                        <div class="hud-corner top-right"></div>
+                        <div class="hud-corner bottom-left"></div>
+                        <div class="hud-corner bottom-right"></div>
                         <canvas class="sparkle-canvas"></canvas>
                         <div class="bento-content">
                             <div class="skill-icon-wrap"><i class="fas fa-network-wired"></i></div>
@@ -201,6 +227,10 @@
                     <!-- CI/CD -->
                     <div class="bento-card bento-item-large reveal stagger-2">
                         <div class="card-glow"></div>
+                        <div class="hud-corner top-left"></div>
+                        <div class="hud-corner top-right"></div>
+                        <div class="hud-corner bottom-left"></div>
+                        <div class="hud-corner bottom-right"></div>
                         <canvas class="sparkle-canvas"></canvas>
                         <div class="bento-content">
                             <div class="skill-icon-wrap"><i class="fas fa-server"></i></div>
@@ -218,6 +248,10 @@
                     <!-- Languages -->
                     <div class="bento-card bento-item-medium reveal stagger-1">
                         <div class="card-glow"></div>
+                        <div class="hud-corner top-left"></div>
+                        <div class="hud-corner top-right"></div>
+                        <div class="hud-corner bottom-left"></div>
+                        <div class="hud-corner bottom-right"></div>
                         <canvas class="sparkle-canvas"></canvas>
                         <div class="bento-content">
                             <div class="skill-icon-wrap"><i class="fas fa-code"></i></div>
@@ -235,6 +269,10 @@
                     <!-- Tools -->
                     <div class="bento-card bento-item-medium reveal stagger-2">
                         <div class="card-glow"></div>
+                        <div class="hud-corner top-left"></div>
+                        <div class="hud-corner top-right"></div>
+                        <div class="hud-corner bottom-left"></div>
+                        <div class="hud-corner bottom-right"></div>
                         <canvas class="sparkle-canvas"></canvas>
                         <div class="bento-content">
                             <div class="skill-icon-wrap"><i class="fas fa-toolbox"></i></div>
@@ -253,11 +291,15 @@
             </div>
         </section>
 
+        <!-- Energy Divider -->
+        <div class="container"><div class="energy-divider"></div></div>
+
         <!-- ══════════ EXPERIENCE ══════════ -->
         <section id="experience">
             <div class="container">
                 <div class="section-header reveal">
-                    <h2 class="titanium-text">Experience & Achievements</h2>
+                    <span class="hud-label">LOG::CAREER_DATA</span>
+                    <h2 class="titanium-text glitch-text" data-text="Experience & Achievements">Experience & Achievements</h2>
                     <p>A proven track record of driving quality excellence and continuous innovation across enterprise projects.</p>
                 </div>
 
@@ -273,7 +315,7 @@
                                 <!-- ZS Associates -->
                                 <div style="position: relative;">
                                     <div class="timeline-dot"></div>
-                                    <span class="exp-date">MAY 2025 - PRESENT</span>
+                                    <span class="exp-date">MAY 2025 — PRESENT</span>
                                     <h3>SDET at ZS Associates</h3>
                                     <div class="exp-list-collapsible" id="exp-zs">
                                         <ul class="exp-list" style="list-style-type: disc;">
@@ -291,7 +333,7 @@
                                 <!-- LTIMindtree -->
                                 <div style="position: relative;">
                                     <div class="timeline-dot"></div>
-                                    <span class="exp-date">MAY 2022 - MAY 2025</span>
+                                    <span class="exp-date">MAY 2022 — MAY 2025</span>
                                     <h3>SDET at LTIMindtree</h3>
                                     <div class="exp-list-collapsible" id="exp-lti">
                                         <ul class="exp-list" style="list-style-type: disc;">
@@ -321,6 +363,10 @@
                     <!-- Certifications -->
                     <div class="bento-card bento-item-medium reveal stagger-1">
                         <div class="card-glow"></div>
+                        <div class="hud-corner top-left"></div>
+                        <div class="hud-corner top-right"></div>
+                        <div class="hud-corner bottom-left"></div>
+                        <div class="hud-corner bottom-right"></div>
                         <canvas class="sparkle-canvas"></canvas>
                         <div class="bento-content">
                             <div class="skill-icon-wrap"><i class="fas fa-certificate"></i></div>
@@ -338,6 +384,10 @@
                     <!-- Awards -->
                     <div class="bento-card bento-item-medium reveal stagger-2">
                         <div class="card-glow"></div>
+                        <div class="hud-corner top-left"></div>
+                        <div class="hud-corner top-right"></div>
+                        <div class="hud-corner bottom-left"></div>
+                        <div class="hud-corner bottom-right"></div>
                         <canvas class="sparkle-canvas"></canvas>
                         <div class="bento-content">
                             <div class="skill-icon-wrap"><i class="fas fa-trophy"></i></div>
@@ -353,16 +403,24 @@
             </div>
         </section>
 
+        <!-- Energy Divider -->
+        <div class="container"><div class="energy-divider"></div></div>
+
         <!-- ══════════ CONTACT ══════════ -->
         <section id="contact">
             <div class="container">
                 <div class="section-header reveal">
-                    <h2 class="titanium-text">Let's Connect</h2>
+                    <span class="hud-label">NET::ESTABLISH_LINK</span>
+                    <h2 class="titanium-text glitch-text" data-text="Let's Connect">Let's Connect</h2>
                     <p>I'm currently exploring new opportunities. Reach out if you want to build high-quality software together.</p>
                 </div>
 
                 <div class="bento-card reveal" style="padding: 3rem;">
                     <div class="card-glow"></div>
+                    <div class="hud-corner top-left"></div>
+                    <div class="hud-corner top-right"></div>
+                    <div class="hud-corner bottom-left"></div>
+                    <div class="hud-corner bottom-right"></div>
                     <div class="contact-grid">
                         <div class="bento-content" style="gap: 1.5rem;">
                             <div class="contact-item">
@@ -408,7 +466,7 @@
                                 <textarea id="message" rows="5" placeholder=" " required minlength="10"></textarea>
                                 <label for="message">Tell me about your project or opportunity...</label>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">Send Message <i class="fas fa-paper-plane"></i></button>
+                            <button type="submit" class="btn btn-primary w-100">Transmit Message <i class="fas fa-paper-plane"></i></button>
                         </form>
                     </div>
                 </div>
@@ -442,6 +500,6 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <script src="assets/js/script.js?v=5"></script>
+    <script src="assets/js/script.js?v=6"></script>
 </body>
 </html>
