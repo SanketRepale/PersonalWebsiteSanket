@@ -1039,39 +1039,179 @@ body.light-mode .hero-status {
 }
 .exp-list li::marker { color: var(--primary); }
 
-/* Timeline connector */
-.timeline-connector { position: relative; }
-.timeline-connector::before {
-    content: '';
+/* ═══════════════════════════════════════════
+   3D CYLINDER TIMELINE (REVOLVING AXIS)
+   ═══════════════════════════════════════════ */
+.timeline-axis-container {
+    position: relative;
+    width: 100%;
+    margin-top: 3rem;
+    perspective: 1500px;
+}
+.timeline-axis-line {
     position: absolute;
-    left: -2rem;
-    top: 0; bottom: 0;
+    left: 50%;
+    top: 0;
+    bottom: 0;
     width: 2px;
     background: linear-gradient(180deg, var(--primary), var(--accent-warm), transparent);
+    box-shadow: 0 0 10px var(--primary);
+    transform: translateX(-50%) scaleY(0);
     opacity: 0;
-    transform: scaleY(0);
     transform-origin: top;
     transition: transform 1.5s var(--ease-out-expo), opacity 0.5s ease;
-    box-shadow: 0 0 8px var(--primary);
 }
-.timeline-connector.active::before { opacity: 1; transform: scaleY(1); }
-.timeline-dot {
+.timeline-axis-container.active .timeline-axis-line {
+    opacity: 1;
+    transform: translateX(-50%) scaleY(1);
+}
+
+.timeline-axis-item {
+    position: relative;
+    width: 100%;
+    margin-bottom: 4rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    perspective: 1200px;
+}
+.timeline-axis-dot {
     position: absolute;
-    left: -2rem;
-    width: 10px; height: 10px;
-    border-radius: 0;
+    left: 50%;
+    top: 2rem;
+    width: 12px;
+    height: 12px;
     background: var(--primary);
-    transform: translate(-4px, 6px) rotate(45deg);
-    box-shadow: 0 0 12px var(--primary);
-    z-index: 1;
+    box-shadow: 0 0 15px var(--primary);
+    border-radius: 0;
+    transform: translateX(-50%) rotate(45deg);
+    z-index: 5;
+    transition: transform 0.5s ease;
 }
-.timeline-dot::after {
+.timeline-axis-dot::after {
     content: '';
     position: absolute;
-    inset: -5px;
-    border: 1px solid rgba(0, 242, 254, 0.2);
+    inset: -6px;
+    border: 1px solid var(--primary);
     border-radius: 0;
     animation: pulse-badge 2s ease-in-out infinite;
+}
+
+/* Desktop Dual Column Layout with 3D Revolving Rotation */
+@media (min-width: 992px) {
+    .timeline-axis-item {
+        grid-template-columns: 1fr 1fr;
+        gap: 8rem;
+    }
+    
+    .timeline-axis-item.left-item .timeline-axis-card-wrap {
+        grid-column: 1;
+        transform-origin: right center;
+        transform: rotateY(12deg);
+    }
+    
+    .timeline-axis-item.right-item .timeline-axis-card-wrap {
+        grid-column: 2;
+        transform-origin: left center;
+        transform: rotateY(-12deg);
+    }
+    
+    /* Reveal and hover effects */
+    .timeline-axis-card-wrap {
+        transition: transform 0.6s var(--ease-out-expo), filter 0.6s ease;
+        filter: brightness(0.85);
+        transform-style: preserve-3d;
+    }
+    
+    .timeline-axis-item:hover .timeline-axis-card-wrap {
+        transform: rotateY(0deg) scale(1.02);
+        filter: brightness(1.1);
+        z-index: 10;
+    }
+
+    /* Bento Axis Rotation Wrappers */
+    .bento-card-axis-wrap {
+        transition: transform 0.6s var(--ease-out-expo), filter 0.6s ease;
+        filter: brightness(0.9);
+        transform-style: preserve-3d;
+        perspective: 1200px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .bento-card-axis-wrap .bento-card {
+        flex: 1;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .bento-card-axis-wrap.left-axis-card {
+        transform-origin: right center;
+        transform: rotateY(8deg);
+    }
+    
+    .bento-card-axis-wrap.right-axis-card {
+        transform-origin: left center;
+        transform: rotateY(-8deg);
+    }
+    
+    .bento-card-axis-wrap:hover {
+        transform: rotateY(0deg) scale(1.02);
+        filter: brightness(1.1);
+        z-index: 10;
+    }
+}
+
+/* Mobile Layout - no rotation, standard cards */
+@media (max-width: 991px) {
+    .timeline-axis-line {
+        left: 20px;
+        transform: none;
+    }
+    .timeline-axis-container.active .timeline-axis-line {
+        transform: scaleY(1);
+    }
+    .timeline-axis-dot {
+        left: 20px;
+        transform: translateX(-50%) rotate(45deg);
+    }
+    .timeline-axis-item {
+        padding-left: 45px;
+    }
+    .bento-card-axis-wrap {
+        transform: none !important;
+        filter: none !important;
+    }
+}
+
+/* 3D Parallax Bento Content Depth */
+.bento-card {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+.bento-card .bento-content {
+    transform-style: preserve-3d;
+    transform: translateZ(0px);
+    transition: transform 0.5s var(--ease-out-expo);
+}
+.bento-card:hover .bento-content {
+    transform: translateZ(30px);
+}
+.bento-card .skill-icon-wrap {
+    transform: translateZ(0px);
+    transition: transform 0.5s var(--ease-out-expo);
+}
+.bento-card:hover .skill-icon-wrap {
+    transform: translateZ(60px) scale(1.08);
+}
+.bento-card .skill-tag {
+    display: inline-block;
+    transform: translateZ(0px);
+    transition: transform 0.5s var(--ease-out-expo);
+}
+.bento-card:hover .skill-tag {
+    transform: translateZ(20px);
 }
 
 /* Experience expand/collapse */

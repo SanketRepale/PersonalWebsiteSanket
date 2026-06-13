@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+            card.style.transform = '';
         });
 
         // Sparkle effect on mouse enter
@@ -376,8 +376,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // ═══════════════════════════════════════════
     // TIMELINE CONNECTOR ANIMATION
     // ═══════════════════════════════════════════
-    const timelineConnector = document.getElementById('timeline-connector');
-    if (timelineConnector) {
+    const timelineAxisContainer = document.querySelector('.timeline-axis-container');
+    if (timelineAxisContainer) {
         const timelineObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -385,8 +385,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     timelineObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.2 });
-        timelineObserver.observe(timelineConnector);
+        }, { threshold: 0.1 });
+        timelineObserver.observe(timelineAxisContainer);
     }
 
     // ═══════════════════════════════════════════

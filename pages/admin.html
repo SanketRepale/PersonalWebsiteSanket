@@ -51,48 +51,25 @@
             justify-content: center;
         }
 
-        .modal-content {
-            background-color: var(--bg-surface);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            padding: 30px;
-            border-radius: 12px;
-            max-width: 400px;
-            width: 100%;
-            text-align: left;
-            box-shadow: 0 10px 30px var(--shadow-default);
-        }
-
-        .modal-content input {
-            width: 100%;
-            margin-bottom: 15px;
-            padding: 12px;
-            background: var(--bg-color);
-            border: 1px solid var(--glass-border);
-            color: var(--text-primary);
-            border-radius: 8px;
-        }
-
-        .modal-content input:focus {
-            border-color: var(--primary);
-            outline: none;
-        }
-
         .close-modal {
             color: var(--text-secondary);
             float: right;
             font-size: 28px;
             font-weight: bold;
             cursor: pointer;
+            line-height: 1;
+            transition: var(--transition);
         }
 
         .close-modal:hover {
             color: var(--primary);
+            transform: scale(1.1);
         }
 
         table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
             margin-top: 20px;
             color: var(--text-primary);
         }
@@ -100,18 +77,33 @@
         th,
         td {
             text-align: left;
-            padding: 12px 15px;
+            padding: 16px 20px;
             border-bottom: 1px solid var(--glass-border);
         }
 
         th {
-            background: rgba(0, 0, 0, 0.05);
-            font-weight: 600;
-            color: var(--text-primary);
+            background: rgba(0, 242, 254, 0.03);
+            font-family: var(--font-heading);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            font-weight: 700;
+            color: var(--primary);
+            border-bottom: 2px solid rgba(0, 242, 254, 0.15);
+        }
+
+        tr {
+            transition: all 0.3s ease;
         }
 
         tr:hover {
-            background: var(--bg-surface-hover);
+            background: rgba(0, 242, 254, 0.02);
+            box-shadow: inset 3px 0 0 var(--primary);
+        }
+
+        body.light-mode tr:hover {
+            background: rgba(79, 70, 229, 0.02);
+            box-shadow: inset 3px 0 0 var(--primary);
         }
 
         .delete-btn {
@@ -120,10 +112,13 @@
             border: none;
             cursor: pointer;
             padding: 5px;
+            font-size: 1.1rem;
+            transition: var(--transition);
         }
 
         .delete-btn:hover {
             color: #dc2626;
+            transform: scale(1.15);
         }
 
         .message-cell {
@@ -140,52 +135,67 @@
 
         /* Login UI explicitly */
         #login-container {
-            max-width: 400px;
+            max-width: 450px;
             width: 100%;
             margin: auto;
             padding: 40px;
-            text-align: center;
-        }
-
-        #login-container input {
-            width: 100%;
-            margin-bottom: 15px;
-            padding: 12px;
-            background: var(--bg-color);
-            border: 1px solid var(--glass-border);
-            color: var(--text-primary);
-            border-radius: 8px;
-        }
-
-        #login-container input:focus {
-            border-color: var(--primary);
-            outline: none;
         }
 
         #dashboard-container {
             display: none;
             width: 100%;
             max-width: 1200px;
+            z-index: 10;
         }
     </style>
 </head>
 
 <body>
 
+    <!-- CRT Scanline Effect -->
+    <div class="scanline-overlay"></div>
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor-dot" id="cursor-dot"></div>
+    <div class="custom-cursor-ring" id="cursor-ring"></div>
+
+    <!-- AI Background Canvas -->
+    <canvas id="ai-background-canvas" class="ai-bg-canvas"></canvas>
+
+    <!-- Ambient Background Orbs -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+    <div class="ambient-glow glow-3"></div>
+
     <!-- Login Screen -->
-    <div id="login-container" class="glass-card">
-        <h2><i class="fas fa-lock"></i> Admin Login</h2>
-        <p style="margin-bottom: 20px; font-size: 0.9em; color: var(--text-secondary);">Restricted access</p>
-        <form id="login-form">
-            <input type="email" id="username" placeholder="Username (Email)" required>
-            <input type="password" id="password" placeholder="Password" required>
+    <div id="login-container" class="bento-card reveal">
+        <div class="card-glow"></div>
+        <div class="hud-corner top-left"></div>
+        <div class="hud-corner top-right"></div>
+        <div class="hud-corner bottom-left"></div>
+        <div class="hud-corner bottom-right"></div>
+        <canvas class="sparkle-canvas"></canvas>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 15px; color: var(--primary);">
+            <i class="fas fa-lock" style="font-size: 1.8rem; text-shadow: 0 0 10px var(--primary);"></i>
+            <h2 class="titanium-text glitch-text" data-text="Admin Login" style="margin: 0;">Admin Login</h2>
+        </div>
+        <p style="margin-bottom: 25px; font-size: 0.9em; color: var(--text-secondary);">Restricted access</p>
+        <form id="login-form" class="contact-form">
+            <div class="form-group">
+                <input type="email" id="username" placeholder=" " required>
+                <label for="username">Username (Email)</label>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" placeholder=" " required>
+                <label for="password">Password</label>
+            </div>
             <button type="submit" class="btn btn-primary w-100" id="login-btn">Login to Dashboard</button>
         </form>
         <div id="login-error" class="error-msg" style="display:none; font-size:0.9em; margin-top:15px;"></div>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 25px;">
             <a href="javascript:void(0)" onclick="document.getElementById('reset-modal').style.display='flex'"
                 style="color:var(--primary); font-size:0.85em; text-decoration:none;">Forgot Password?</a>
-            <a href="/" style="color:var(--text-secondary); font-size:0.8em;">&larr; Back to Public Site</a>
+            <a href="/" style="color:var(--text-secondary); font-size:0.85em; text-decoration:none;">&larr; Back to Public Site</a>
         </div>
     </div>
 
@@ -195,27 +205,48 @@
             style="display:inline-block; margin-bottom:15px; color:var(--text-secondary); font-size:0.9em; text-decoration:none;"><i
                 class="fas fa-arrow-left"></i> Back to Home</a>
         <div class="admin-header">
-            <h2><i class="fas fa-inbox"></i> Inbox Dashboard</h2>
+            <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--primary);">
+                <i class="fas fa-inbox" style="font-size: 1.8rem; text-shadow: 0 0 10px var(--primary);"></i>
+                <h2 class="titanium-text glitch-text" data-text="Inbox Dashboard" style="margin: 0;">Inbox Dashboard</h2>
+            </div>
             <div class="header-actions">
                 <button onclick="document.getElementById('creds-modal').style.display='flex'"
-                    class="btn btn-outline-light"><i class="fas fa-key"></i> Settings</button>
-                <button onclick="fetchMessages()" class="btn btn-outline-light"><i class="fas fa-sync-alt"></i>
+                    class="btn btn-outline"><i class="fas fa-key"></i> Settings</button>
+                <button onclick="fetchMessages()" class="btn btn-outline"><i class="fas fa-sync-alt"></i>
                     Refresh</button>
-                <button onclick="logout()" class="btn btn-outline-light"
+                <button onclick="logout()" class="btn btn-outline"
                     style="color: #ef4444; border-color: #ef4444;"><i class="fas fa-sign-out-alt"></i> Logout</button>
             </div>
         </div>
 
         <!-- Credentials Modal -->
         <div id="creds-modal" class="modal">
-            <div class="modal-content glass-card">
+            <div class="bento-card modal-content" style="max-width: 400px; width: 100%; text-align: left;">
+                <div class="card-glow"></div>
+                <div class="hud-corner top-left"></div>
+                <div class="hud-corner top-right"></div>
+                <div class="hud-corner bottom-left"></div>
+                <div class="hud-corner bottom-right"></div>
+                <canvas class="sparkle-canvas"></canvas>
                 <span class="close-modal"
                     onclick="document.getElementById('creds-modal').style.display='none'">&times;</span>
-                <h3 style="margin-bottom: 20px;"><i class="fas fa-user-edit"></i> Update Credentials</h3>
-                <form id="creds-form">
-                    <input type="email" id="new-username" placeholder="New Username (Email Address)" required>
-                    <input type="password" id="new-password" placeholder="New Password" required>
-                    <input type="password" id="new-recovery-pin" placeholder="New Recovery PIN (e.g. 1234)" required>
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 25px; color: var(--primary);">
+                    <i class="fas fa-user-edit" style="font-size: 1.5rem; text-shadow: 0 0 10px var(--primary);"></i>
+                    <h3 class="titanium-text glitch-text" data-text="Update Credentials" style="margin: 0;">Update Credentials</h3>
+                </div>
+                <form id="creds-form" class="contact-form">
+                    <div class="form-group">
+                        <input type="email" id="new-username" placeholder=" " required>
+                        <label for="new-username">New Username (Email)</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="new-password" placeholder=" " required>
+                        <label for="new-password">New Password</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="new-recovery-pin" placeholder=" " required>
+                        <label for="new-recovery-pin">New Recovery PIN (e.g. 1234)</label>
+                    </div>
                     <button type="submit" class="btn btn-primary w-100" id="update-creds-btn">Update</button>
                     <div id="creds-msg" style="margin-top:10px; font-size:0.9em; text-align:center;"></div>
                 </form>
@@ -224,17 +255,35 @@
 
         <!-- Reset Password Modal -->
         <div id="reset-modal" class="modal">
-            <div class="modal-content glass-card">
+            <div class="bento-card modal-content" style="max-width: 400px; width: 100%; text-align: left;">
+                <div class="card-glow"></div>
+                <div class="hud-corner top-left"></div>
+                <div class="hud-corner top-right"></div>
+                <div class="hud-corner bottom-left"></div>
+                <div class="hud-corner bottom-right"></div>
+                <canvas class="sparkle-canvas"></canvas>
                 <span class="close-modal"
                     onclick="document.getElementById('reset-modal').style.display='none'">&times;</span>
-                <h3 style="margin-bottom: 20px;"><i class="fas fa-unlock-alt"></i> Reset Password</h3>
-                <p style="font-size:0.85em; color:var(--text-secondary); margin-bottom:15px;">Enter your username and
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 20px; color: var(--primary);">
+                    <i class="fas fa-unlock-alt" style="font-size: 1.5rem; text-shadow: 0 0 10px var(--primary);"></i>
+                    <h3 class="titanium-text glitch-text" data-text="Reset Password" style="margin: 0;">Reset Password</h3>
+                </div>
+                <p style="font-size:0.85em; color:var(--text-secondary); margin-bottom:20px;">Enter your username and
                     your secret
                     Recovery PIN to set a new password. (Default PIN is 12345)</p>
-                <form id="reset-form">
-                    <input type="email" id="reset-username" placeholder="Username (Email)" required>
-                    <input type="password" id="reset-pin" placeholder="Recovery PIN" required>
-                    <input type="password" id="reset-new-password" placeholder="New Password" required>
+                <form id="reset-form" class="contact-form">
+                    <div class="form-group">
+                        <input type="email" id="reset-username" placeholder=" " required>
+                        <label for="reset-username">Username (Email)</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="reset-pin" placeholder=" " required>
+                        <label for="reset-pin">Recovery PIN</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="reset-new-password" placeholder=" " required>
+                        <label for="reset-new-password">New Password</label>
+                    </div>
                     <button type="submit" class="btn btn-primary w-100" id="reset-btn">Reset Password</button>
                     <div id="reset-msg" style="margin-top:10px; font-size:0.9em; text-align:center;"></div>
                 </form>
@@ -243,8 +292,13 @@
 
         <!-- Stats Summary -->
         <div style="margin-bottom: 25px; display: flex; gap: 20px; flex-wrap: wrap;">
-            <div class="glass-card" style="padding: 20px; display: flex; align-items: center; gap: 15px; border-radius: 16px; flex: 1; min-width: 200px; max-width: 300px;">
-                <div style="font-size: 2.2rem; color: var(--primary);"><i class="fas fa-eye"></i></div>
+            <div class="bento-card" style="padding: 20px; display: flex; align-items: center; gap: 15px; border-radius: 16px; flex: 1; min-width: 200px; max-width: 300px;">
+                <div class="card-glow"></div>
+                <div class="hud-corner top-left"></div>
+                <div class="hud-corner top-right"></div>
+                <div class="hud-corner bottom-left"></div>
+                <div class="hud-corner bottom-right"></div>
+                <div class="skill-icon-wrap" style="margin-bottom: 0; font-size: 1.5rem;"><i class="fas fa-eye"></i></div>
                 <div>
                     <div style="font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Total Page Hits</div>
                     <div style="font-size: 1.8rem; font-weight: 800; color: var(--text-primary);" id="total-hits">-</div>
@@ -252,7 +306,12 @@
             </div>
         </div>
 
-        <div class="glass-card" style="overflow-x: auto;">
+        <div class="bento-card" style="overflow-x: auto; padding: 2rem;">
+            <div class="card-glow"></div>
+            <div class="hud-corner top-left"></div>
+            <div class="hud-corner top-right"></div>
+            <div class="hud-corner bottom-left"></div>
+            <div class="hud-corner bottom-right"></div>
             <table>
                 <thead>
                     <tr>
@@ -283,6 +342,9 @@
         <span class="theme-toggle-telemetry" style="right: 60px; left: auto; top: 50%; transform: translateY(-50%) translateX(-4px); bottom: auto;">SYS::MODE</span>
     </button>
 
+    <!-- Unified High-Tech JavaScript -->
+    <script src="../assets/js/script.js"></script>
+
     <script>
         const IS_DEV = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
         const API_BASE = IS_DEV ? 'http://localhost:8000/api' : '/api';
@@ -293,51 +355,6 @@
         let lastActivity = parseInt(localStorage.getItem('adminLastActivity')) || 0;
         let timeoutTimer;
         const TIMEOUT_DURATION = 5 * 60 * 1000; // 5 minutes
-
-        // Theme Toggle Logic
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const body = document.body;
-        const themeIcon = themeToggleBtn.querySelector('.theme-toggle-icon');
-        const telemetry = themeToggleBtn.querySelector('.theme-toggle-telemetry');
-        const savedTheme = localStorage.getItem('theme');
-
-        if (savedTheme === 'light') {
-            body.classList.add('light-mode');
-            if (themeIcon) {
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
-            }
-            if (telemetry) telemetry.textContent = 'SYS::MODE::LIGHT';
-        } else {
-            if (telemetry) telemetry.textContent = 'SYS::MODE::DARK';
-        }
-
-        themeToggleBtn.addEventListener('click', () => {
-            // High-tech activation animation
-            themeToggleBtn.classList.add('clicked');
-            setTimeout(() => themeToggleBtn.classList.remove('clicked'), 600);
-
-            body.classList.toggle('light-mode');
-            const isLight = body.classList.contains('light-mode');
-
-            if (themeIcon) {
-                if (isLight) {
-                    themeIcon.classList.remove('fa-sun');
-                    themeIcon.classList.add('fa-moon');
-                } else {
-                    themeIcon.classList.remove('fa-moon');
-                    themeIcon.classList.add('fa-sun');
-                }
-            }
-
-            if (isLight) {
-                localStorage.setItem('theme', 'light');
-                if (telemetry) telemetry.textContent = 'SYS::MODE::LIGHT';
-            } else {
-                localStorage.setItem('theme', 'dark');
-                if (telemetry) telemetry.textContent = 'SYS::MODE::DARK';
-            }
-        });
 
         function checkSession() {
             if (authToken) {
@@ -549,7 +566,6 @@
                     }, 2000);
                 } else {
                     msgDiv.style.color = '#ef4444';
-                    // FastAPI often returns arrays for validation errors, or a detail string for HTTPExceptions
                     let errMsg = 'Failed to update credentials.';
                     if (data.detail) {
                         errMsg = Array.isArray(data.detail) ? data.detail[0].msg : data.detail;
