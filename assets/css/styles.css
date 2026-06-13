@@ -1153,15 +1153,6 @@ body.light-mode .back-to-top { color: #fff; }
 .stagger-4 { transition-delay: 0.2s; }
 .stagger-5 { transition-delay: 0.25s; }
 
-/* Typing cursor — Neon blink */
-.typing-cursor { 
-    display: inline-block; width: 3px; height: 1em; 
-    background: var(--primary); margin-left: 4px; 
-    animation: cursor-blink 0.8s step-end infinite; 
-    vertical-align: text-bottom;
-    box-shadow: 0 0 8px var(--primary), 0 0 16px rgba(0,242,254,0.3);
-}
-@keyframes cursor-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
 /* ═══════════════════════════════════════════
    FOOTER — HUD Bottom Bar
