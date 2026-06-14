@@ -504,6 +504,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (canvas) {
         const ctx = canvas.getContext('2d');
         let particles = [];
+        let dataStreams = [];
         let mouse = { x: null, y: null, radius: 160 };
 
         // Handle high DPI screens
@@ -511,10 +512,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const dpr = window.devicePixelRatio || 1;
             canvas.width = window.innerWidth * dpr;
             canvas.height = window.innerHeight * dpr;
-            ctx.scale(dpr, dpr);
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
             canvas.style.width = `${window.innerWidth}px`;
             canvas.style.height = `${window.innerHeight}px`;
             initParticles();
+            initDataStreams();
         }
 
         class Particle {
@@ -569,6 +571,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        function initDataStreams() {
+            dataStreams = [];
+            const streamCount = Math.min(Math.floor(window.innerWidth / 96), 18);
+            const tokens = ['AI', 'QA', 'CI', 'API', 'POM', 'ETL', 'RUN', 'OK'];
+            for (let i = 0; i < streamCount; i++) {
+                dataStreams.push({
+                    x: Math.random() * window.innerWidth,
+                    y: Math.random() * window.innerHeight,
+                    speed: 0.18 + Math.random() * 0.42,
+                    token: tokens[Math.floor(Math.random() * tokens.length)],
+                    alpha: 0.06 + Math.random() * 0.1
+                });
+            }
+        }
+
         window.addEventListener('resize', resizeCanvas);
         window.addEventListener('mousemove', (e) => {
             mouse.x = e.clientX;
@@ -590,6 +607,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const warmColorRaw = isLight ? { r: 236, g: 72, b: 153 } : { r: 240, g: 147, b: 251 };
             const mouseLineColorRaw = isLight ? { r: 236, g: 72, b: 153 } : { r: 240, g: 147, b: 251 };
             const maxDistance = 140;
+
+            ctx.save();
+            ctx.font = '700 10px Courier New, monospace';
+            ctx.textAlign = 'center';
+            dataStreams.forEach(stream => {
+                stream.y += stream.speed;
+                if (stream.y > window.innerHeight + 24) {
+                    stream.y = -24;
+                    stream.x = Math.random() * window.innerWidth;
+                }
+                const streamColor = isLight ? `rgba(79, 70, 229, ${stream.alpha})` : `rgba(0, 242, 254, ${stream.alpha})`;
+                ctx.fillStyle = streamColor;
+                ctx.fillText(stream.token, stream.x, stream.y);
+                ctx.fillRect(stream.x - 1, stream.y + 6, 2, 18);
+            });
+            ctx.restore();
 
             // Update & Draw Particles
             for (let i = 0; i < particles.length; i++) {

@@ -11,9 +11,9 @@
         rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/styles.css?v=8">
     <style>
-        body {
+        body.admin-screen {
             padding: 40px;
             display: flex;
             flex-direction: column;
@@ -46,9 +46,11 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.68);
+            backdrop-filter: blur(18px);
             align-items: center;
             justify-content: center;
+            padding: 1.25rem;
         }
 
         .close-modal {
@@ -150,10 +152,13 @@
     </style>
 </head>
 
-<body>
+<body class="admin-screen">
 
     <!-- CRT Scanline Effect -->
     <div class="scanline-overlay"></div>
+
+    <!-- Tech Grid Background -->
+    <div class="tech-grid"></div>
 
     <!-- Custom Cursor -->
     <div class="custom-cursor-dot" id="cursor-dot"></div>
@@ -168,18 +173,18 @@
     <div class="ambient-glow glow-3"></div>
 
     <!-- Login Screen -->
-    <div id="login-container" class="bento-card reveal">
+    <div id="login-container" class="bento-card reveal admin-login-panel">
         <div class="card-glow"></div>
         <div class="hud-corner top-left"></div>
         <div class="hud-corner top-right"></div>
         <div class="hud-corner bottom-left"></div>
         <div class="hud-corner bottom-right"></div>
         <canvas class="sparkle-canvas"></canvas>
-        <div style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 15px; color: var(--primary);">
+        <div class="admin-title-row">
             <i class="fas fa-lock" style="font-size: 1.8rem; text-shadow: 0 0 10px var(--primary);"></i>
             <h2 class="titanium-text glitch-text" data-text="Admin Login" style="margin: 0;">Admin Login</h2>
         </div>
-        <p style="margin-bottom: 25px; font-size: 0.9em; color: var(--text-secondary);">Restricted access</p>
+        <p class="admin-subtitle">SECURE_CONSOLE::RESTRICTED_ACCESS</p>
         <form id="login-form" class="contact-form">
             <div class="form-group">
                 <input type="email" id="username" placeholder=" " required>
@@ -192,20 +197,18 @@
             <button type="submit" class="btn btn-primary w-100" id="login-btn">Login to Dashboard</button>
         </form>
         <div id="login-error" class="error-msg" style="display:none; font-size:0.9em; margin-top:15px;"></div>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 25px;">
+        <div class="admin-login-links">
             <a href="javascript:void(0)" onclick="document.getElementById('reset-modal').style.display='flex'"
-                style="color:var(--primary); font-size:0.85em; text-decoration:none;">Forgot Password?</a>
-            <a href="/" style="color:var(--text-secondary); font-size:0.85em; text-decoration:none;">&larr; Back to Public Site</a>
+                class="admin-link">Forgot Password?</a>
+            <a href="/" class="admin-link muted"><i class="fas fa-arrow-left"></i> Back to Public Site</a>
         </div>
     </div>
 
     <!-- Dashboard Screen -->
     <div id="dashboard-container" class="container">
-        <a href="/"
-            style="display:inline-block; margin-bottom:15px; color:var(--text-secondary); font-size:0.9em; text-decoration:none;"><i
-                class="fas fa-arrow-left"></i> Back to Home</a>
+        <a href="/" class="admin-link muted admin-back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
         <div class="admin-header">
-            <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--primary);">
+            <div class="admin-title-row dashboard-title">
                 <i class="fas fa-inbox" style="font-size: 1.8rem; text-shadow: 0 0 10px var(--primary);"></i>
                 <h2 class="titanium-text glitch-text" data-text="Inbox Dashboard" style="margin: 0;">Inbox Dashboard</h2>
             </div>
@@ -291,8 +294,8 @@
         </div>
 
         <!-- Stats Summary -->
-        <div style="margin-bottom: 25px; display: flex; gap: 20px; flex-wrap: wrap;">
-            <div class="bento-card" style="padding: 20px; display: flex; align-items: center; gap: 15px; border-radius: 16px; flex: 1; min-width: 200px; max-width: 300px;">
+        <div class="admin-stats">
+            <div class="bento-card admin-metric-card">
                 <div class="card-glow"></div>
                 <div class="hud-corner top-left"></div>
                 <div class="hud-corner top-right"></div>
@@ -300,13 +303,13 @@
                 <div class="hud-corner bottom-right"></div>
                 <div class="skill-icon-wrap" style="margin-bottom: 0; font-size: 1.5rem;"><i class="fas fa-eye"></i></div>
                 <div>
-                    <div style="font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Total Page Hits</div>
-                    <div style="font-size: 1.8rem; font-weight: 800; color: var(--text-primary);" id="total-hits">-</div>
+                    <div class="admin-metric-label">Total Page Hits</div>
+                    <div class="admin-metric-value" id="total-hits">-</div>
                 </div>
             </div>
         </div>
 
-        <div class="bento-card" style="overflow-x: auto; padding: 2rem;">
+        <div class="bento-card admin-table-panel">
             <div class="card-glow"></div>
             <div class="hud-corner top-left"></div>
             <div class="hud-corner top-right"></div>
@@ -333,8 +336,7 @@
     </div>
 
     <!-- Theme Switcher Floating Button -->
-    <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme"
-        style="position: fixed; bottom: 30px; right: 30px; z-index: 9999;">
+    <button id="theme-toggle" class="theme-toggle-btn admin-theme-toggle" aria-label="Toggle Theme">
         <div class="theme-toggle-ring-outer"></div>
         <div class="theme-toggle-ring-inner"></div>
         <div class="theme-toggle-scan"></div>
@@ -343,7 +345,7 @@
     </button>
 
     <!-- Unified High-Tech JavaScript -->
-    <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/script.js?v=7"></script>
 
     <script>
         const IS_DEV = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
