@@ -1260,8 +1260,13 @@ body.light-mode .exp-list-collapsible:not(.expanded)::after {
 /* ═══════════════════════════════════════════
    CONTACT SECTION - Floating Labels + HUD Inputs
    ═══════════════════════════════════════════ */
+.contact-card { padding: 3rem; }
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
 .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+.contact-item p, .contact-item a {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
 
 .form-group { position: relative; }
 .form-group input, .form-group textarea {
@@ -1506,6 +1511,7 @@ body.light-mode .footer-socials a.social-github:hover { color: #24292e; border-c
         margin: 2rem auto 0;
     }
     .contact-grid { grid-template-columns: 1fr; }
+    .contact-card { padding: 1.5rem; }
     .bento-item-small { grid-column: span 12; }
     .bento-card { padding: 2rem; }
     .nav-links { display: none; }
@@ -1522,6 +1528,22 @@ body.light-mode .footer-socials a.social-github:hover { color: #24292e; border-c
     .timeline-connector::before { display: none; }
     .timeline-dot { display: none; }
     .scanline-overlay { display: none; }
+}
+
+@media (max-width: 480px) {
+    .stats-row {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+    .section-header h2 {
+        font-size: 2.2rem;
+    }
 }
 
 /* ═══════════════════════════════════════════
