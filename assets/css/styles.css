@@ -1489,6 +1489,22 @@ body.light-mode .footer-socials a.social-github:hover { color: #24292e; border-c
     .hero { padding-top: 8rem; }
     .hero-content { grid-template-columns: 1fr; }
     .hero h1 { font-size: 2.8rem; }
+    .hero-cta {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+    .hero-cta .magnetic-btn {
+        width: 100%;
+        display: block;
+    }
+    .hero-cta .btn {
+        width: 100%;
+    }
+    .hero-image-wrap {
+        max-width: 320px;
+        margin: 2rem auto 0;
+    }
     .contact-grid { grid-template-columns: 1fr; }
     .bento-item-small { grid-column: span 12; }
     .bento-card { padding: 2rem; }

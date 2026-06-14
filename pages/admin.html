@@ -14,20 +14,28 @@
     <link rel="stylesheet" href="../assets/css/styles.css?v=8">
     <style>
         body.admin-screen {
-            padding: 40px;
             display: flex;
             flex-direction: column;
-            align-items: center;
             min-height: 100vh;
         }
 
         .admin-header {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
             margin-bottom: 30px;
             flex-wrap: wrap;
             gap: 15px;
+        }
+
+        @media (min-width: 769px) {
+            body.admin-screen {
+                padding: 40px;
+                align-items: center;
+            }
+
+            .admin-header {
+                justify-content: space-between;
+                align-items: center;
+            }
         }
 
         .header-actions {
@@ -140,7 +148,12 @@
             max-width: 450px;
             width: 100%;
             margin: auto;
-            padding: 40px;
+        }
+
+        @media (min-width: 769px) {
+            #login-container {
+                padding: 40px;
+            }
         }
 
         #dashboard-container {

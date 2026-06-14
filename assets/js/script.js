@@ -175,43 +175,46 @@ document.addEventListener('DOMContentLoaded', () => {
     // ═══════════════════════════════════════════
     // BENTO CARD - MOUSE GLOW + GRADIENT BORDER + 3D TILT
     // ═══════════════════════════════════════════
-    document.querySelectorAll('.bento-card').forEach(card => {
-        card.addEventListener('mousemove', e => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            // Update mouse position for radial glow
-            const glow = card.querySelector('.card-glow');
-            if (glow) {
-                glow.style.setProperty('--mouse-x', `${x}px`);
-                glow.style.setProperty('--mouse-y', `${y}px`);
-            }
-            
-            // Calculate angle for rotating gradient border
-            const cx = rect.width / 2;
-            const cy = rect.height / 2;
-            const angle = Math.atan2(y - cy, x - cx) * (180 / Math.PI);
-            card.style.setProperty('--card-angle', `${angle + 180}deg`);
+    // Bind hover animations (glow, tilt, sparkles) only on hover-supporting devices
+    if (window.matchMedia('(hover: hover)').matches) {
+        document.querySelectorAll('.bento-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Update mouse position for radial glow
+                const glow = card.querySelector('.card-glow');
+                if (glow) {
+                    glow.style.setProperty('--mouse-x', `${x}px`);
+                    glow.style.setProperty('--mouse-y', `${y}px`);
+                }
+                
+                // Calculate angle for rotating gradient border
+                const cx = rect.width / 2;
+                const cy = rect.height / 2;
+                const angle = Math.atan2(y - cy, x - cx) * (180 / Math.PI);
+                card.style.setProperty('--card-angle', `${angle + 180}deg`);
 
-            // 3D Tilt effect
-            const tiltX = ((y - cy) / cy) * 4; // max 4deg
-            const tiltY = ((x - cx) / cx) * -4;
-            card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-2px)`;
-        });
-
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = '';
-        });
-
-        // Sparkle effect on mouse enter
-        const sparkleCanvas = card.querySelector('.sparkle-canvas');
-        if (sparkleCanvas) {
-            card.addEventListener('mouseenter', (e) => {
-                createSparkles(sparkleCanvas, e, card);
+                // 3D Tilt effect
+                const tiltX = ((y - cy) / cy) * 4; // max 4deg
+                const tiltY = ((x - cx) / cx) * -4;
+                card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-2px)`;
             });
-        }
-    });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+
+            // Sparkle effect on mouse enter
+            const sparkleCanvas = card.querySelector('.sparkle-canvas');
+            if (sparkleCanvas) {
+                card.addEventListener('mouseenter', (e) => {
+                    createSparkles(sparkleCanvas, e, card);
+                });
+            }
+        });
+    }
 
     // ═══════════════════════════════════════════
     // SPARKLE PARTICLE SYSTEM
@@ -331,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cursorDot = document.getElementById('cursor-dot');
     const cursorRing = document.getElementById('cursor-ring');
     
-    if (cursorDot && cursorRing && window.innerWidth > 768) {
+    if (cursorDot && cursorRing && window.innerWidth > 768 && window.matchMedia('(hover: hover)').matches) {
         let cursorX = 0, cursorY = 0;
         let ringX = 0, ringY = 0;
 
@@ -507,9 +510,9 @@ document.addEventListener('DOMContentLoaded', () => {
         let dataStreams = [];
         let mouse = { x: null, y: null, radius: 160 };
 
-        // Handle high DPI screens
+        // Handle high DPI screens (cap at 2 for performance)
         function resizeCanvas() {
-            const dpr = window.devicePixelRatio || 1;
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
             canvas.width = window.innerWidth * dpr;
             canvas.height = window.innerHeight * dpr;
             ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
