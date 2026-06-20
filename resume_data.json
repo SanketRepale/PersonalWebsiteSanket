@@ -1,0 +1,56 @@
+{
+  "name": "Sanket Prakash Repale",
+  "title": "SDET & Automation Engineer",
+  "email": "sanketrepale123@gmail.com",
+  "phone": "(+91) 8452836416",
+  "location": "Pune, Maharashtra",
+  "linkedin": "https://www.linkedin.com/in/sanket-repale-521157287",
+  "summary": "I build scalable test automation frameworks, design CI/CD quality gates, and deliver robust end-to-end testing strategies to help engineering teams release high-quality software with confidence.",
+  "experience": [
+    {
+      "company": "ZS Associates",
+      "role": "Test Associate",
+      "duration": "MAY 2025 - PRESENT",
+      "bullets": [
+        "Developed and optimized UI test automation frameworks using Python and Selenium.",
+        "Built and executed API automation test suites to verify backend integrations.",
+        "Designed and implemented API performance testing scripts using Locust.",
+        "Conducted ETL testing utilizing Agentic AI Automation frameworks, integrating AI workflows with traditional automation.",
+        "Initiated and scaled automated ETL validations using the Tosca Data Integrity (DI) module."
+      ]
+    },
+    {
+      "company": "LTIMindtree",
+      "role": "Software Development Engineer in Test (SDET)",
+      "duration": "MAY 2022 - MAY 2025",
+      "bullets": [
+        "Actively involved in all stages of the Software Testing Life Cycle (STLC), ensuring high-quality test planning, design, execution, and reporting.",
+        "Developed and refined automated test scripts using Selenium, significantly enhancing the efficiency and reliability of web testing processes.",
+        "Applied advanced C# features and core Object-Oriented Programming (OOP) principles such as inheritance, polymorphism, encapsulation, and abstraction, creating robust, reusable test code and optimizing test case design.",
+        "Managed key project components, implementing the Page Object Model (POM) design pattern to improve code maintainability and simplify the build process.",
+        "Achieved a 75% reduction in testing time through the automation of test scripts, significantly improving testing speed and accuracy.",
+        "Specialized in web service testing with ReadyAPI and Postman, ensuring comprehensive testing of backend systems and API reliability.",
+        "Developed a scalable and adaptable API automation solution using ReadyAPI, tailored for different environments and integration needs.",
+        "Utilized Azure DevOps for bug tracking, project management, and continuous collaboration, improving team coordination and project progress tracking.",
+        "Contributed to the team's success by focusing on code quality, best practices, and conducting thorough peer code reviews, facilitating knowledge sharing and skill advancement.",
+        "Collaborated with cross-functional teams to optimize testing processes, driving successful project completions through effective coordination and communication.",
+        "Delivered high-quality testing services to renowned clients, including Wolters Kluwer, adhering to strict quality standards and timelines.",
+        "Led the QA team's progress, ensuring the on-time production release and maintaining high standards for application quality."
+      ]
+    }
+  ],
+  "certifications": [
+    "<strong>AZ-900: Microsoft Azure Fundamentals (2024)</strong> – Foundational cloud concepts, Azure services, security, and compliance.",
+    "<strong>Selenium WebDriver Masterclass with C# (2022)</strong> – Automation framework development and UI testing using Selenium with C#.",
+    "<strong>REST API Web Service Automation Testing – Ready API & SoapUI (2022)</strong> – API automation, request validation, and performance testing.",
+    "<strong>Playwright Automation with JavaScript (2024)</strong> – Modern web application cross-browser automation using Playwright.",
+    "<strong>Azure DevOps for Automation Testers (2024)</strong> – CI/CD pipelines, automated test integration, and Azure DevOps workflows.",
+    "<strong>Generative AI for Everyone (2023)</strong> – AI-driven testing strategies and workflow automation in modern QA."
+  ],
+  "awards": [
+    "<strong>Shooting Star Award</strong> – Bestowed for quick integration and delivering automation frameworks ahead of schedule at LTIMindtree.",
+    "<strong>Team Player Award</strong> – Honored for support in cross-functional teams and bridging engineering collaboration gaps.",
+    "<strong>Super Crew Award</strong> - Awarded for delivering high-quality automation solutions and optimizing testing frameworks.",
+    "<strong>Client Appreciation for Quality Work</strong> – Earned direct recognition from Wolters Kluwer for outstanding software quality."
+  ]
+}

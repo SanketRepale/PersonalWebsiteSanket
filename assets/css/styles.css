@@ -1684,19 +1684,7 @@ h1, h2, h3, h4 {
     padding: 0.45rem 0.8rem 0.45rem 0;
 }
 
-.logo::after {
-    content: 'QA//AI';
-    position: absolute;
-    left: calc(100% + 0.35rem);
-    top: 50%;
-    transform: translateY(-50%);
-    font-family: 'Courier New', monospace;
-    font-size: 0.52rem;
-    color: var(--primary);
-    letter-spacing: 0.16em;
-    opacity: 0.65;
-    white-space: nowrap;
-}
+
 
 .hero {
     position: relative;
