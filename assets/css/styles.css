@@ -416,8 +416,8 @@ body.light-mode .btn-primary { color: #fff; }
    ═══════════════════════════════════════════ */
 .bento-card {
     background: var(--bg-surface);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(6px) saturate(140%);
+    -webkit-backdrop-filter: blur(6px) saturate(140%);
     border: 1px solid var(--glass-border);
     border-radius: var(--bento-radius);
     padding: 2.5rem;
@@ -425,9 +425,10 @@ body.light-mode .btn-primary { color: #fff; }
     position: relative;
     overflow: hidden;
     box-shadow: 0 0 30px rgba(0, 242, 254, 0.03), 0 8px 32px rgba(0,0,0,0.3);
-    transform-style: preserve-3d;
     will-change: transform;
     clip-path: var(--hud-clip);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 /* HUD corner brackets */
@@ -1116,13 +1117,13 @@ body.light-mode .hero-status {
     .timeline-axis-item.left-item .timeline-axis-card-wrap {
         grid-column: 1;
         transform-origin: right center;
-        transform: rotateY(12deg);
+        transform: rotateY(4deg);
     }
     
     .timeline-axis-item.right-item .timeline-axis-card-wrap {
         grid-column: 2;
         transform-origin: left center;
-        transform: rotateY(-12deg);
+        transform: rotateY(-4deg);
     }
     
     /* Reveal and hover effects */
@@ -1158,12 +1159,12 @@ body.light-mode .hero-status {
     
     .bento-card-axis-wrap.left-axis-card {
         transform-origin: right center;
-        transform: rotateY(8deg);
+        transform: rotateY(3deg);
     }
     
     .bento-card-axis-wrap.right-axis-card {
         transform-origin: left center;
-        transform: rotateY(-8deg);
+        transform: rotateY(-3deg);
     }
     
     .bento-card-axis-wrap:hover {
@@ -1196,32 +1197,24 @@ body.light-mode .hero-status {
 }
 
 /* 3D Parallax Bento Content Depth */
-.bento-card {
-    transform-style: preserve-3d;
-    perspective: 1000px;
-}
 .bento-card .bento-content {
-    transform-style: preserve-3d;
-    transform: translateZ(0px);
     transition: transform 0.5s var(--ease-out-expo);
 }
 .bento-card:hover .bento-content {
-    transform: translateZ(30px);
+    transform: translateY(-4px);
 }
 .bento-card .skill-icon-wrap {
-    transform: translateZ(0px);
     transition: transform 0.5s var(--ease-out-expo);
 }
 .bento-card:hover .skill-icon-wrap {
-    transform: translateZ(60px) scale(1.08);
+    transform: scale(1.08);
 }
 .bento-card .skill-tag {
     display: inline-block;
-    transform: translateZ(0px);
     transition: transform 0.5s var(--ease-out-expo);
 }
 .bento-card:hover .skill-tag {
-    transform: translateZ(20px);
+    transform: translateY(-2px);
 }
 
 /* Experience expand/collapse */
